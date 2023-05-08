@@ -1,5 +1,5 @@
 import React,{useState} from "react"
-import {View, Text,TextInput,StyleSheet,Image} from "react-native"
+import {View, Text,TextInput,ScrollView, StyleSheet,Image} from "react-native"
 import MyButtons from "../components/MyButtons";
 import geralStyles from "../styles/geralStyles";
 
@@ -7,7 +7,7 @@ const Login = (props) => {
 
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [validEmail, setValidEmail] = useState(null);
+    const [validEmail, setValidEmail] = useState(true);
 
     const onSubmitHandler = ()=>{
               
@@ -23,7 +23,7 @@ const Login = (props) => {
         
 
     return(
-        <View style={{flex:1, margin:10}}> 
+        <ScrollView style={{flex:1, margin:10}}> 
             <View style={[styles.imageContainer]}>
                 <Image style={{width:250, height:250}} source={require("../assets/logoApp.jpg")}/>
             </View>
@@ -35,25 +35,22 @@ const Login = (props) => {
                     <Text style={{fontSize:18,fontWeight:500}}>Email</Text>
                     <TextInput numberOfLines={1} autoComplete="off" autoCorrect={false}
                     maxLength={50} value={email} keyboardType="email-address"  onChangeText={setEmail} placeholder="Insira o seu email" 
-                        style={styles.textInputContainer}/>
-                    {validEmail===false && <Text style={{color: 'red',fontWeight:"bold"}}>Por favor, insira um email válido</Text>}
-                        
-
+                        style={[styles.textInputContainer ,!validEmail && geralStyles.invalidInput]}/>
+                    {validEmail==false && <Text style={{color: 'red',fontWeight:"bold"}}>Por favor, insira um email válido</Text>}
                 </View>
                 <View style={{height:95}}>
                     <Text style={{fontSize:18, fontWeight:500}}>Password</Text>
                     <TextInput secureTextEntry numberOfLines={1} autoComplete="off" autoCorrect={false}
                     maxLength={50} value={password}  onChangeText={setPassword} placeholder="Insira a sua password" 
                         style={styles.textInputContainer}></TextInput>
-                        
                 </View>
             </View>
             <View style={{marginBottom:10}}>
-                <MyButtons OnPress={()=>{onSubmitHandler()}}  title="Entrar" width={350} color="#1a6dc0"></MyButtons>
+                <MyButtons onPress={()=>onSubmitHandler()}  title="Entrar" width={350} color="#1a6dc0"></MyButtons>
             </View>
             <Text style={{color:"#1a6dc0", textAlign:"center", paddingVertical:10}}>Esqueci-me da Password </Text>
             <Text style={{color:"black", fontSize:15, textAlign:"center", paddingVertical:10}}>Ainda não tem conta ?<Text style={{color:"#1a6dc0"}}> Clique aqui!</Text> </Text>
-        </View>
+        </ScrollView>
     );
 }
 
