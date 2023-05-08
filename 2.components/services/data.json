@@ -1,0 +1,222 @@
+{
+    "users":[
+        {
+            "id":1,
+            "name": "Alzira",
+            "apelido": "Silva",
+            "date": "05/07/1990",
+            "username": "alziraS",
+            "password": "Aa#123",
+            "morada": "Rua das Flores, 123",
+            "city": "Aveiro",
+			"iconName":"lock-closed-outline"
+          },
+          {
+            "id":2,
+            "name": "Ana",
+            "apelido": "Fernandes",
+            "date": "12/08/1985",
+            "username": "anafernandes",
+            "password": "Bb#123",
+            "morada": "Rua do Sol, 456",
+            "city": "Bragança",
+			"iconName":"lock-open-outline"
+          },
+          {
+            "id":3,
+            "name": "Miguel",
+            "apelido": "Rodrigues",
+            "date": "21/03/1992",
+            "username": "miguelrodrigues",
+            "password": "Cc#123",
+            "morada": "Avenida da Liberdade, 789",
+            "city": "Vila Real",
+			"iconName":"lock-open-outline"
+          },
+          {
+            "id":4,
+            "name": "Sofia",
+            "apelido": "Pereira",
+            "date": "09/11/1998",
+            "username": "sofiapereira",
+            "password": "Dd#123",
+            "morada": "Rua da Paz, 222",
+            "city": "Aveiro",
+			"iconName":"lock-closed-outline"
+          },
+          {
+            "id":5,
+            "name": "Ricardo",
+            "apelido": "Santos",
+            "date": "30/06/1987",
+            "username": "ricardosantos",
+            "password": "Ee#123",
+            "morada": "Rua do Campo, 555",
+            "city": "Bragança",
+			"iconName":"lock-open-outline"
+          }     
+    ],
+    "expenses":[
+        {
+            "id": 1,
+            "emissor": "Altice, MEO",
+            "descricao": "Internet",
+            "data": "2023-05-20",
+			"foto": "../assets/meo.jpg",
+            "valor": 30,
+            "pago": false,
+            "metodoPagamento": "multibanco",
+            "entidade": "12345",
+            "referencia": "67890"
+        },{
+            "id": 2,
+            "emissor": "EDP",
+            "descricao": "Eletricidade",
+            "data": "2023-05-09",
+			"foto": "edp.jpg",
+            "valor": 50.2,
+            "pago": false,
+            "metodoPagamento": "débito direto",
+            "entidade": "54321",
+            "referencia": "09876"
+        },
+        {
+            "id": 3,
+            "emissor": "Galp",
+            "descricao": "Gasolina",
+            "data": "2023-05-02",
+			"foto": "galp.jpg",
+            "valor": 45,
+            "pago": true,
+            "metodoPagamento": "cartão de crédito",
+            "entidade": "",
+            "referencia": ""
+        },
+        {
+            "id": 4,
+            "emissor": "Pingo Doce",
+            "descricao": "Compras",
+            "data": "2023-05-06",
+			"foto": "pingoDoce.jpg",
+            "valor": 75,
+            "pago": false,
+            "metodoPagamento": "dinheiro",
+            "entidade": "",
+            "referencia": ""
+        },
+        {
+            "id": 5,
+            "emissor": "Continente",
+            "descricao": "Compras",
+            "data": "2023-05-03",
+			"foto": "./continente.jpg",
+            "valor": 60,
+            "pago": true,
+            "metodoPagamento": "multibanco",
+            "entidade": "98765",
+            "referencia": "43210"
+        },
+        {
+            "id": 6,
+            "emissor": "Vodafone",
+            "descricao": "Telemóvel",
+            "data": "2023-05-06",
+			"foto": "vodafone.jpg",
+            "valor": 20,
+            "pago": true,
+            "metodoPagamento": "débito direto",
+            "entidade": "11111",
+            "referencia": "22222"
+        },
+        {
+            "id": 7,
+            "emissor": "CP - Comboios de Portugal",
+            "descricao": "Bilhete de comboio",
+			"foto": "cp.jpg",
+            "data": "2023-05-07",
+            "valor": 12,
+            "pago": false,
+            "metodoPagamento": "cartão de crédito",
+            "entidade": "",
+            "referencia": ""
+        },
+        {
+            "id": 8,
+            "emissor": "Uber Eats",
+            "descricao": "Refeição",
+            "data": "2023-05-04",
+			"foto": "uberEats.jpg",
+            "valor": 18,
+            "pago": true,
+            "metodoPagamento": "cartão de crédito",
+            "entidade": "",
+            "referencia": ""
+        }
+    ],
+    "cities": [
+        "Aveiro",
+        "Braga",
+        "Bragança",
+        "Porto",
+        "Vila Real"
+    ],
+    "metodosPagamento": [
+        "Multibanco",
+        "PayPal",
+        "Débito Direto"
+    ],
+    "issuers": [
+        {
+          "id":1,  
+          "nome": "Altice, MEO",
+          "logo": "meo.jpg",
+          "metodoPagamentoPredefinido": "Multibanco"
+        },
+        {
+          "id":2, 
+          "nome": "EDP",
+          "logo": "edp.jpg",
+          "metodoPagamentoPredefinido": "Multibanco"
+        },
+        {
+          "id":3, 
+          "nome": "Vodafone",
+          "logo": "vodafone.jpg",
+          "metodoPagamentoPredefinido": "PayPal"
+        },
+        {
+          "id": 4,
+          "nome": "Uber Eats",
+          "logo": "vodafone.jpg",
+          "metodoPagamentoPredefinido": "PayPal"
+          
+        },
+        {
+          "id": 5,
+          "nome": "CP - Comboios de Portugal",
+          "logo": "vodafone.jpg",
+          "metodoPagamentoPredefinido": "PayPal"
+        },
+        {
+          "id":6,
+          "nome":"Continente",
+          "logo":"edp.jpg",
+          "metodoPagamentoPredefinido":"Multibanco"
+
+        },
+        {
+          "id":7,
+          "nome":"Pingo Doce",
+          "logo":"pingoDoce.jpg",
+          "metodoPagamentoPredefinido":"Multibanco"
+            
+        },
+        {
+          "id":8,
+          "nome":"Galp",
+          "logo":"galp.jpg",
+          "metodoPagamentoPredefinido":"Débito Direto"
+        }
+        
+      ]
+}
