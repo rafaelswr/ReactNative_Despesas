@@ -57,20 +57,18 @@ const HistoricoDespesas = (props) => {
                     </View> 
                 </View>
             </View>
-            
+
             <FlatList data={filteredExpenses} renderItem={({item})=>{
             return(<CardExpenses emissor={item.emissor} logo={`data:image/png;base64,${props.foto}`} data={item.data} pago={item.pago} descricao={item.descricao} valor={item.valor}></CardExpenses>);
             }} keyExtractor={(item) => item.id.toString()}></FlatList>
 
-
-                <View>
-                    <Text style={{fontWeight:500, fontSize:20}}>Despesas do mês de Maio de 2023:</Text>
-                    <View style={{padding:10}}>
-                        <Text style={{color:"#da721d",fontWeight:500, fontSize:30}}>{soma}€</Text>
-                    </View>
-                </View>
-              
-               <View style={{borderColor:"grey",marginVertical:10,borderWidth:2}}></View>
+                <>
+                    <Text style={{fontWeight:500, fontSize:15}}>Despesas do mês de Maio de 2023:</Text>
+                    <View style={{}}>
+                        <Text style={{color:"#da721d",fontWeight:500, fontSize:20}}>{soma}€</Text>
+                    </View>    
+                </>
+            
               
             
 

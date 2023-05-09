@@ -21,7 +21,7 @@ import NewPassword from './screens/NewPassword';
 export default function App() {
   return (
     <>
-    <Login></Login>
+    <EditarPerfil></EditarPerfil>
     </>
   );
 }

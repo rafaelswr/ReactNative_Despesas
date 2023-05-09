@@ -8,6 +8,7 @@ import datas from "../services/data.json";
 
 const MinhasDespesas = (props) => {
   const [currentFilter, setCurrentFilter] = useState("Ver Todas");
+  
   var soma = 0; 
   const filteredExpenses = datas.expenses.filter((expense) => {
     soma += expense.valor;
@@ -40,21 +41,19 @@ const MinhasDespesas = (props) => {
                   </Picker>
               </View>
           </View>
-     
   
         <FlatList data={filteredExpenses} renderItem={({item})=>{
             return(<CardExpenses emissor={item.emissor} logo={`data:image/png;base64,${props.foto}`} data={item.data} pago={item.pago} descricao={item.descricao} valor={item.valor}></CardExpenses>);
         }} keyExtractor={(item) => item.id.toString()}></FlatList>
-
+        
         {
           currentFilter=="Ver Todas" && 
-          <View style={{justifyContent:"center",alignItems:"center", paddingTop:10}}>
+            <> 
             <Text style={{fontSize:17}}>Total das Despesas do mês</Text>
             <Text style={{fontSize:20, color:"blue"}} >{soma}€</Text>
-          </View>
-         
+            </>
         }
-      </View>
+       </View>
       <BottomNavBar home></BottomNavBar>
     </>
   )
