@@ -10,23 +10,32 @@ import datas from "../../services/data.json";
 
 const AdminCidades = (props)=>{
     
+    const [cities, setCities] = useState(datas.cities);
+    const [filteredCities, setFilteredCities] = useState(datas.cities);
     const [newCity, setNewCity] = useState("");
     const [cityExists, setCityExists] = useState(false);
-    const [search, setSearch] = useState("");
+
+    const handleBlur = () => {
+        setCityExists(false);
+    }
 
     return(
         <View style={adminStyles.containerMain}>
             <AdminTopNav iconName="refresh-outline" title="Cidades"></AdminTopNav> 
-
-            <Pesquisa search={search} onSearch={(value)=>setSearch(value)}></Pesquisa>
+               
+            <Pesquisa onSearch={(search) => {
+                setFilteredCities(cities.filter(city=>{
+                    return city.toLowerCase().includes(search.toLowerCase());
+                }));
+                }}></Pesquisa>
             
             <View style={adminStyles.horizontalLine}/>
             
             <View style={{height:86}}>
                 <Text style={geralStyles.headerInputs}> Nova Cidade </Text>
-                <TextInput numberOfLines={1} autoComplete="off" autoCorrect={false}
-                        maxLength={50} value={newCity}  onChangeText={setNewCity} placeholder="Nova cidade" 
-                        style={[geralStyles.textInputContainer, cityExists && styles.invalidInput]}></TextInput> 
+                <TextInput onChangeText={setNewCity} numberOfLines={1} autoComplete="off" autoCorrect={false}
+                        maxLength={50} onBlur={handleBlur} value={newCity}  placeholder="Nova cidade" 
+                        style={[geralStyles.textInputContainer, cityExists && geralStyles.invalidInput]}></TextInput> 
                 {
                   cityExists && <Text style={{color:"red",fontWeight:"bold", fontSize:12}}>Esta Cidade já existe</Text>
                 }
@@ -34,16 +43,23 @@ const AdminCidades = (props)=>{
 
             <View style={{flexDirection:"row"}}>
                 <View style={{flex:1}}>
-                    <MyButtons onPress={()=>{Alert.alert('Cidade guardada com sucesso!')}} title="Guardar" color="#1a6dc0"></MyButtons>
+                    <MyButtons onPress={()=>{
+                       setCityExists(cities.some(city=>{
+                            return city.toLowerCase() === newCity.toLowerCase();
+                        }));
+                        
+                        }} title="Guardar" color="#1a6dc0"></MyButtons>
                 </View>
                 <View style={{flex:1}}>
-                    <MyButtons onPress={()=>{Alert.alert('Todas as alterações serão ignoradas.')}}  title="Cancelar" color="#989696"></MyButtons>
+                    <MyButtons onPress={()=>{
+                        setNewCity("");
+                    }}  title="Cancelar" color="#989696"></MyButtons>
                 </View>
             </View>
             
             <View style={adminStyles.horizontalLine}/>
 
-            <FlatList data={datas.cities} renderItem={({item})=>{
+            <FlatList data={filteredCities} renderItem={({item})=>{
                   return( <AdminCard onPress={()=>{}} name="close-outline" size={34} title={item} backgroundColor="#FDEBAC"></AdminCard>);
             }} keyExtractor={(item) => item.toString()}></FlatList>
 

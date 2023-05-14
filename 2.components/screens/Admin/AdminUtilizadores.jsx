@@ -9,17 +9,22 @@ import datas from "../../services/data.json";
 
 const AdminUtilizadores = (props) => {
 
-    const [search, setSearch] = useState("");
+    const [users, setUsers] = useState(datas.users);
+    const [filteredUsers, setFilteredUsers] = useState(datas.users);
     
     return(
         <View style={adminStyles.containerMain}>
             <AdminTopNav iconName="refresh-outline" title="Utilizadores"></AdminTopNav> 
 
-            <Pesquisa search={search} onSearch={(value)=>setSearch(value)}></Pesquisa>
+            <Pesquisa onSearch={ search => {
+                setFilteredUsers(users.filter(user=>{
+                    return user.username.toLowerCase().includes(search.toLowerCase());
+                }))
+            }}></Pesquisa>
             
             
-            <FlatList data={datas.users} renderItem={({item})=>{
-                  return(<AdminCard onPress={()=>{}} name={item.iconName} title={item.name} size={25} backgroundColor="#ADFFB5"></AdminCard>);
+            <FlatList data={filteredUsers} renderItem={({item})=>{
+                  return(<AdminCard onPress={()=>{}} name={item.iconName} title={item.username} size={25} backgroundColor="#ADFFB5"></AdminCard>);
             }} keyExtractor={(item) => item.id.toString()}></FlatList>
 
 

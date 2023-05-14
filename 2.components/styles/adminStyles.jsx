@@ -11,8 +11,8 @@ export default {
         paddingBottom:10,
     },
     horizontalLine:{
-        borderColor:'#efefef',
-        borderWidth: 2,
+        borderColor:'#d9b0b0',
+        borderWidth: 1,
         marginVertical:10,
     },
     titleNav:{
