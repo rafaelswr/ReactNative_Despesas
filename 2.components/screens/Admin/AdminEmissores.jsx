@@ -9,13 +9,18 @@ import datas from "../../services/data.json";
 
 const AdminEmissores = (props) => {
     
-    const [search, setSearch] = useState("");
-
+     const [issuers, setIssuers ] = useState(datas.issuers);
+     const [filteredIssuers, setFilteredIssuers ] = useState(datas.issuers);
+    
     return (
         <View style={adminStyles.containerMain}>
             <AdminTopNav iconName="refresh-outline" title="Emissores"></AdminTopNav> 
 
-            <Pesquisa search={search} onSearch={(value)=>setSearch(value)}></Pesquisa>
+            <Pesquisa  onSearch={(search)=>{
+                setFilteredIssuers(issuers.filter(iss=>{
+                    return iss.nome.toLowerCase().includes(search.toLowerCase());
+                }))
+            }}></Pesquisa>
             
             <View style={{paddingVertical:5}}>
                 <TouchableOpacity style={styles.buttonNovo}>
@@ -28,7 +33,7 @@ const AdminEmissores = (props) => {
 
             <View style={adminStyles.horizontalLine}/>
 
-            <FlatList data={datas.issuers} renderItem={({item})=>{
+            <FlatList data={filteredIssuers} renderItem={({item})=>{
                 return( <AdminCard onPress={()=>{}} name="close-outline" size={34} title={item.nome} backgroundColor="#A9D6FF"></AdminCard>);
             }} keyExtractor={(item) => item.id.toString()}></FlatList>
 
