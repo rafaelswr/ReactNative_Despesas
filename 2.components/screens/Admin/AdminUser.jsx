@@ -66,12 +66,6 @@ const AdminUser = (props) => {
                     <Ionicons style={{ paddingLeft:5}} size={30} name="calendar-outline"></Ionicons>
                 </View>
             </View>
-
-
-         
-           
-           
-
             <View style={{flexDirection:"row",height:92}}>
                 <View style={{ flex:1,paddingHorizontal:5}}>
                     <Text style={geralStyles.headerInputs}>Morada</Text>

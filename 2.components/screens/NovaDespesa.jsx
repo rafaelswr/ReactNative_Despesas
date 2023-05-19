@@ -1,5 +1,5 @@
 import React,{useState} from "react"
-import {View, Text,ScrollView,StyleSheet, TextInput} from "react-native"
+import {View, Text,ScrollView,Image,Modal,StyleSheet,TouchableOpacity, TextInput} from "react-native"
 import TopNavBar from "../components/TopNavBar";
 import BottomNavBar from "../components/BottomNavBar";
 import { Picker } from "@react-native-picker/picker";
@@ -7,17 +7,23 @@ import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import datas from "../services/data.json";
 
+import { useImagePicker } from "../services/imageService";
+
+
+
 const NovaDespesa = (props) => {
 
-  const [currentFilter, setCurrentFilter] = useState("Meo, Altice");
-  const [descricao, setDescricao] = useState("");
-  const [data, setData] = useState(null);
-  const [value, setValue] = useState("17.99");
-  const [metodoPagamento, setMetodoPagamento] = useState("multibanco");
-  const [isSelected, setSelection] = useState(false);
-  const [entidade, setEntidade] = useState("");
-  const [referencia, setReferencia] = useState("");
+    const {selectedImage, modalVisible, openModal, removePhoto, ModalPress} = useImagePicker();
 
+    const [currentFilter, setCurrentFilter] = useState("Meo, Altice");
+    const [descricao, setDescricao] = useState("");
+    const [data, setData] = useState(null);
+    const [value, setValue] = useState("17.99");
+    const [metodoPagamento, setMetodoPagamento] = useState("Multibanco");
+    const [isSelected, setSelection] = useState(false);
+    const [entidade, setEntidade] = useState("");
+    const [referencia, setReferencia] = useState("");
+    
   return (
     <>
       <TopNavBar leftIconName="arrow-back-outline" title="Adicionar Despesa" rightIconName="checkmark-outline"></TopNavBar>
@@ -51,14 +57,45 @@ const NovaDespesa = (props) => {
                     <Ionicons style={{ paddingLeft:5}} size={30} name="calendar-outline"></Ionicons>
                 </View>
             </View>
-            <View style={{height:92}}>
-                <Text style={{fontSize:17, fontWeight:500}}>Valor</Text>
-                <View style={{flexDirection:"row", alignItems:"center"}}>
-                    <View style={{flex:0.3}}>
-                        <TextInput keyboardType="number-pad" value={value} onChangeText={setValue} dataDetectorTypes="calendarEvent" style={styles.textInputContainer}></TextInput>
+            <View style={{flexDirection:"row", marginVertical:5}}>
+
+                <View style={{flexDirection:"column", flex:0.5}}>
+                            
+                    <View style={{height:80,flex:0.6}}>
+                        <Text style={{fontSize:17, fontWeight:500}}>Valor</Text>
+                        <View style={{flexDirection:"row",alignItems:"center"}}>
+                            <View style={{flex:1}}>
+                                <TextInput keyboardType="number-pad" value={value} onChangeText={setValue} dataDetectorTypes="calendarEvent" style={styles.textInputContainer}></TextInput>
+                            </View>
+                            <Ionicons style={{ paddingLeft:5}} size={30} name="logo-euro"></Ionicons>
+                        </View>
                     </View>
-                    <Ionicons style={{ paddingLeft:5}} size={30} name="logo-euro"></Ionicons>
+                    <View style={{ flex:0.4,paddingVertical:10, marginBottom:0, paddingHorizontal:5}}>
+                    <Text style={{fontSize:17, fontWeight:500,}}>Fatura</Text>
+                        <TouchableOpacity style={{backgroundColor:"#2d4dce",marginTop:10, padding:10}} onPress={()=>openModal()}>
+                            <Text style={{alignSelf:"center",fontSize:17, color:"white"}}>Inserir ou tirar foto</Text>
+                        </TouchableOpacity>
+                    
+                    </View>
+                
                 </View>
+
+                {selectedImage && 
+                <View style={{ flex:0.5, flexDirection:"column"}}>
+                    <View style={{justifyContent:"center",alignItems:"center",flex:0.7,}}>
+                        <TouchableOpacity onPress={()=>{}}>
+                            <Image source={{ uri: selectedImage }} style={{flex:1,width: 150, height: 100, alignSelf:"center"}} />
+                        </TouchableOpacity>
+                    </View>
+                    
+                    <View style={{marginHorizontal:20}}>
+                        <TouchableOpacity style={{backgroundColor:"white"}} onPress={()=>{removePhoto()}}>
+                            <Ionicons name="close-outline" style={{color:"red", alignSelf:"center",fontWeight:"bold"}} size={40}></Ionicons>
+                        </TouchableOpacity> 
+                    </View>
+                </View>     
+                }
+
             </View>
             <View style={{height:70, marginBottom:15,}}>
                 <Text style={{fontSize:17, fontWeight:500,paddingBottom:10}}>Estado</Text>
@@ -85,17 +122,19 @@ const NovaDespesa = (props) => {
                   </Picker>
               </View> 
             </View>
-            {metodoPagamento=="multibanco" && 
+
+
+            {metodoPagamento=="Multibanco" && 
             <View style={{backgroundColor:"#edecec", marginTop:10}}>
                 <View style={{flex:1, flexDirection:"row"}}>
                     <View style={{flex:0.4,padding:10,}}>
                         <Text style={{textAlign:"center",fontWeight:"bold",fontSize:20}}>Entidade</Text>
-                        <TextInput keyboardType="number-pad" value={entidade} onChangeText={setEntidade} dataDetectorTypes="calendarEvent" style={styles.textInputMultibanco}></TextInput>
+                        <TextInput maxLength={5} keyboardType="number-pad" value={entidade} onChangeText={setEntidade} dataDetectorTypes="calendarEvent" style={styles.textInputMultibanco}></TextInput>
 
                     </View>
                     <View style={{flex:0.6,padding:10,}}>
                     <Text style={{fontWeight:"bold",textAlign:"center",fontSize:20}}>Referência</Text>
-                        <TextInput keyboardType="number-pad" value={referencia} onChangeText={setReferencia} dataDetectorTypes="calendarEvent" style={styles.textInputMultibanco}></TextInput>
+                        <TextInput maxLength={9} keyboardType="number-pad" value={referencia} onChangeText={setReferencia} dataDetectorTypes="calendarEvent" style={styles.textInputMultibanco}></TextInput>
                     </View>
                 
                 </View>
@@ -106,7 +145,11 @@ const NovaDespesa = (props) => {
             </View>
             
             }
+            
       </ScrollView> 
+        {
+            modalVisible && <ModalPress></ModalPress>
+        }
       <BottomNavBar></BottomNavBar>
     </>
   )
@@ -141,5 +184,37 @@ const styles = StyleSheet.create({
         elevation: 2,
         backgroundColor:"#cacaca",
         fontSize:15,
-    }
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+      optionButton: {
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        marginVertical: 10,
+        backgroundColor: 'white',
+        borderRadius: 5,
+      },
+      optionText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      imageContainer: {
+        marginTop: 20,
+        alignItems: 'center',
+      },
+      image: {
+        width: 200,
+        height: 200,
+        resizeMode: 'cover',
+      },
+
 });

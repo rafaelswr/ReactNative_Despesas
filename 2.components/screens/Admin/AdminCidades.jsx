@@ -60,7 +60,7 @@ const AdminCidades = (props)=>{
             <View style={adminStyles.horizontalLine}/>
 
             <FlatList data={filteredCities} renderItem={({item})=>{
-                  return( <AdminCard onPress={()=>{}} name="close-outline" size={34} title={item} backgroundColor="#FDEBAC"></AdminCard>);
+                  return( <AdminCard modalReference="a Cidade" onPress={()=>{}} name="close-outline" size={34} title={item} backgroundColor="#FDEBAC"></AdminCard>);
             }} keyExtractor={(item) => item.toString()}></FlatList>
 
         </View>

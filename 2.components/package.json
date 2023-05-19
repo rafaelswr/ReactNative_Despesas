@@ -15,15 +15,15 @@
     "@react-native-picker/picker": "^2.4.10",
     "expo": "~48.0.15",
     "expo-checkbox": "^2.3.1",
+    "expo-file-system": "~15.2.2",
     "expo-status-bar": "~1.4.4",
-    "fs": "^0.0.1-security",
     "react": "18.2.0",
     "react-native": "0.71.7",
-    "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.9.0",
+    "react-native-image-picker": "^5.3.1",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.19.4",
-    "expo-file-system": "~15.2.2"
+    "expo-image-picker": "~14.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -6,8 +6,11 @@ import MyButtons from "../../components/MyButtons";
 import { Picker } from "@react-native-picker/picker";
 import geralStyles from "../../styles/geralStyles";
 import datas from "../../services/data.json";
+import { useImagePicker } from "../../services/imageService";
 
 const NovoEmissor = (props) => {
+
+    const {ModalPress, removePhoto, openModal, selectedImage, modalVisible} = useImagePicker();
 
     const [emissor,setEmissor] = useState("");
     const [tipoPagamento,setTipoPagamento] = useState("");
@@ -26,11 +29,12 @@ const NovoEmissor = (props) => {
             <View style={{flexDirection:"row", paddingVertical:10}}>
                 <View style={{flex:0.55}}>
                     <View style={{margin:10, backgroundColor:"#91a9ca"}}>
-                        <Image source={require("../../assets/meo.jpg")} style={{alignSelf:"center", width:150,margin:10, height:100}}></Image>
+                        <Image resizeMode="contain" source={{uri:selectedImage}} style={{alignSelf:"center", width:150,margin:10, height:100}}></Image>
                     </View>
                 </View>
                 <View style={{flex:0.45,alignSelf:"center"}}>
-                    <MyButtons onPress={()=>{Alert.alert('Cidade guardada com sucesso!')}} title="Upload Foto" color="#1a6dc0"></MyButtons>
+                    <MyButtons onPress={()=>{openModal()}} title="Upload Foto" color="#1a6dc0"></MyButtons>
+                    <MyButtons onPress={()=>{removePhoto()}} title="Remove Foto" color="red"></MyButtons>
                 </View>
             </View>
 
@@ -52,7 +56,10 @@ const NovoEmissor = (props) => {
         <View style={{marginVertical:40}}>
             <MyButtons onPress={()=>{Alert.alert("Adicionado com Sucesso")}}  title="Adicionar" width={350} color="#1a6dc0"></MyButtons>
             <MyButtons onPress={()=>{Alert.alert("Tem a certeza, os dados vão ser perdidos!")}}  title="Cancelar " width={350} color="#989696"></MyButtons>
-        </View>       
+        </View>
+        {
+            modalVisible && <ModalPress></ModalPress>
+        }  
    </View>
   )
 };

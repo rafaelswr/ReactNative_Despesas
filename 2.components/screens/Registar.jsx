@@ -1,42 +1,52 @@
 import React,{useState} from "react"
-import {View, Text, StyleSheet,TextInput,ScrollView, DatePickerAndroid} from "react-native"
+import {View, Text, StyleSheet,Image,TextInput,ScrollView, TouchableOpacity} from "react-native"
 import TopNavBar2 from "../components/TopNavBar2";
 import MyButtons from "../components/MyButtons";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
-import data from "../services/data.json";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as FileSystem from 'expo-file-system';
 import datas from "../services/data.json";
+import { useImagePicker } from "../services/imageService";
 
 
 const Registar = (props) => {
 
+  const {selectedImage,modalVisible, ModalPress, openModal,removePhoto } = useImagePicker();
+
   const [name, setName ] = useState("");
   const [apelido, setApelido ] = useState("");
   const [username, setUsername ] = useState("");
+  const [validUsername, setValidUsername] = useState(true);
   const [morada, setMorada ] = useState("");
   const [codPostal_1,setCodePostal_1] = useState("");
   const [codPostal_2,setCodePostal_2] = useState("");
-  
+
   const postalCode = `${codPostal_1}-${codPostal_2}`;
-
   const [city, setCity] = useState("-");
-
   const [date, setDate] = useState("");
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [validPassword, setValidPassword] = useState(true);
+  const [validForm, setValidForm ] = useState(false);
+
   
-  
- 
+  const handlingUsername = async ()=>{
+    //checks if username exists on firestore
+    //const UserNameinUse= await firebase.firestore().collection('users').where('username', '==', username).get();
+   // if(UserNameinUse.empty){
+    if(true){   
+      setValidUsername(true);
+    }else{
+      setValidUsername(false);
+    }
+
+  }
+
   const handlingSubmit = async ()=>{
-
-    if(validPassword){
-      setValidPassword(true);
-
-      const newUser = {
-        id:data.users.length+1, 
+    if(validPassword && validUsername ){
+      
+       const newUser = {
+        id:datas.users.length+1, 
         nome:name,
         sobrenome:apelido,
         dataNascimento:date,
@@ -49,8 +59,6 @@ const Registar = (props) => {
       
      console.log("success");
     
-    }else{
-      setValidPassword(false);
     }
     
   }
@@ -61,6 +69,7 @@ const Registar = (props) => {
     }else{
       setValidPassword(true);
     }
+
   }
 
 
@@ -102,25 +111,47 @@ const Registar = (props) => {
                     <Ionicons style={{ paddingLeft:5}} size={30} name="calendar-outline"></Ionicons>
                 </View>
             </View>
-          <View style={{flexDirection:"row",height:92}}>
-                <View style={{ flex:0.7, paddingHorizontal:5}}>
-                    <Text style={{fontSize:17, fontWeight:500}}>Username</Text>
-                    <TextInput numberOfLines={1} autoComplete="off" autoCorrect={false}
-                    maxLength={50} value={username}  onChangeText={setUsername} placeholder="Insira o seu nome de utilizador" 
-                        style={styles.textInputContainer}></TextInput>
-                </View>
+        
+            <View style={{flexDirection:"row", marginVertical:5}}>
 
+                <View style={{flexDirection:"column", flex:0.6,}}>
+                    <View style={{ flex:0.5, paddingHorizontal:5, height:90}}>
+                        <Text style={{fontSize:17, fontWeight:500}}>Username</Text>
+                        <TextInput numberOfLines={1} autoComplete="off" autoCorrect={false}
+                        maxLength={50} value={username} onEndEditing={handlingUsername}  onChangeText={setUsername} placeholder="nome de utilizador" 
+                            style={[styles.textInputContainer,  !validUsername && styles.invalidInput]}></TextInput>
+                          {!validUsername &&  <Text style={{color:"red",fontWeight:"bold", fontSize:12}}>Username já existe </Text>}
+                    </View>
+                    <View style={{ flex:0.4,paddingVertical:10, marginBottom:10, paddingHorizontal:5}}>
+                        <TouchableOpacity style={{backgroundColor:"#a47c06", padding:10,borderRadius:10}} onPress={()=>openModal()}>
+                            <Text style={{alignSelf:"center", color:"white"}}>Upload Foto (Opcional)</Text>
+                        </TouchableOpacity>
+                    </View>
+                    
+                </View>
+                 {selectedImage && 
+                  <View style={{ flex:0.40,justifyContent:"center", alignItems:"center"}}>
+                      <Image resizeMode="contain"  source={{ uri: selectedImage }} style={{ width: 100, height: 100 }} />
+                      <View>
+
+                        <TouchableOpacity style={{backgroundColor:"red",padding:5, marginTop:5}} onPress={()=>{removePhoto()}}>
+                          <Text style={{alignSelf:"center",color:"black", fontWeight:"bold"}}>Excluir Foto</Text>
+                        </TouchableOpacity> 
+                        </View>
+                    </View>     
+                  }
+               
             </View>
            
-            <View style={{flexDirection:"row",height:92}}>
+            <View style={{flexDirection:"row",height:92,marginTop:5}}>
                 <View style={{ flex:0.5,paddingHorizontal:5}}>
                     <Text style={{fontSize:17, fontWeight:500}}>Password</Text>
                     <TextInput secureTextEntry placeholder="*******" numberOfLines={1} autoComplete="off" autoCorrect={false}
                     maxLength={50} value={password}  onChangeText={setPassword}
                         style={[styles.textInputContainer, !validPassword && styles.invalidInput]}></TextInput>
                 </View>
-                <View style={{ flex:0.5,paddingHorizontal:5 ,alignSelf:"center"}}>
-                    <Text style={{fontSize:13}}> *Password dever ser composta por 6 letras, 1 maiúscula, 1 minúscula e caracteres especiais.</Text>
+                <View style={{ flex:0.5,paddingHorizontal:5 ,justifyContent:"center", alignItems:"center"}}>
+                    <Text style={{fontSize:13, fontWeight:"bold"}}> *Password dever ser composta por, pelo menos, 6 letras das quias 1 maiúscula, 1 minúscula e caracteres especiais.</Text>
                 </View>
 
             </View>
@@ -172,20 +203,20 @@ const Registar = (props) => {
                 <View style={{flex:0.60,paddingHorizontal:10}}>
                     <Text style={{fontSize:17, fontWeight:"500"}}>Código Postal</Text>
                     <View style={{flexDirection:"row"}}>
-                        <TextInput numberOfLines={1} autoComplete="off" autoCorrect={false}
-                            maxLength={50} placeholder="0000" value={codPostal_1} onChangeText={setCodePostal_1}
+                        <TextInput keyboardType="numeric" numberOfLines={1} autoComplete="off" autoCorrect={false}
+                            maxLength={4} placeholder="0000" value={codPostal_1} onChangeText={setCodePostal_1}
                             style={[styles.textInputContainer,{flex:0.6}]}></TextInput>
                         <Text style={{alignSelf:"center", fontSize:14,paddingHorizontal:5,}}>-</Text>
-                        <TextInput numberOfLines={1} autoComplete="off" autoCorrect={false}
-                            maxLength={50} placeholder="000" value={codPostal_2} onChangeText={setCodePostal_2}
+                        <TextInput keyboardType="numeric" numberOfLines={1} autoComplete="off" autoCorrect={false}
+                            maxLength={3} placeholder="000" value={codPostal_2} onChangeText={setCodePostal_2}
                             style={[styles.textInputContainer,{flex:0.4}]}></TextInput>
                     </View>
                 </View>
             </View>
 
-          <MyButtons onPress={handlingSubmit} title="Registar" width={350} color="#1a6dc0"></MyButtons>
+          <MyButtons isDisabled={!validForm} onPress={handlingSubmit} title="Registar" width={350} color="#1a6dc0"></MyButtons>
       </ScrollView>
-
+                          {modalVisible && <ModalPress></ModalPress>}
     </>
   )
 };

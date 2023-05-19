@@ -34,7 +34,7 @@ const AdminEmissores = (props) => {
             <View style={adminStyles.horizontalLine}/>
 
             <FlatList data={filteredIssuers} renderItem={({item})=>{
-                return( <AdminCard onPress={()=>{}} name="close-outline" size={34} title={item.nome} backgroundColor="#A9D6FF"></AdminCard>);
+                return( <AdminCard modalReference="o emissor" onPress={()=>{}} name="close-outline" size={34} title={item.nome} backgroundColor="#A9D6FF"></AdminCard>);
             }} keyExtractor={(item) => item.id.toString()}></FlatList>
 
         </View>

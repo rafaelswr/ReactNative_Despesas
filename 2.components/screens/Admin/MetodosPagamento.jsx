@@ -65,7 +65,7 @@ const MetodosPagamento = (props) => {
 
   
           <FlatList data={filteredMethods} renderItem={({item})=>{
-              return( <AdminCard onPress={()=>{}} name="close-outline" size={34} title={item} backgroundColor="#ACFDEE"></AdminCard>);
+              return( <AdminCard modalReference="o Metodo de Pagamento" onPress={()=>{}} name="close-outline" size={34} title={item} backgroundColor="#ACFDEE"></AdminCard>);
           }} keyExtractor={(item) => item.toString()}></FlatList>
 
       
