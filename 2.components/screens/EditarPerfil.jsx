@@ -1,5 +1,5 @@
 import React,{useState} from "react"
-import {View, Text, StyleSheet,TextInput,ScrollView, Image, KeyboardAvoidingView} from "react-native"
+import {View, Text, StyleSheet, TextInput,ScrollView, Image, KeyboardAvoidingView} from "react-native"
 import TopNavBar from "../components/TopNavBar";
 import BottomNavBar from "../components/BottomNavBar";
 import MyButtons from "../components/MyButtons";
@@ -7,8 +7,10 @@ import datas from "../services/data.json";
 import { Picker } from "@react-native-picker/picker";
 import geralStyles from "../styles/geralStyles";
 import { Ionicons } from "@expo/vector-icons";
+import { useImagePicker } from "../services/imageService";
 
 const EditarPerfil = (props) => {
+    const { selectedImage, modalVisible, removePhoto, openModal, ModalPress } = useImagePicker();
 
     var user2 = datas.users[2];
 
@@ -23,16 +25,18 @@ const EditarPerfil = (props) => {
     const [city,setCity] = useState("");
     const [currentFilter, setCurrentFilter] = useState("");
 
+   
   return (
     <>
       <TopNavBar leftIconName="arrow-back-outline" title="Editar Perfil" rightIconName="checkmark-outline"></TopNavBar>
       <ScrollView keyboardDismissMode="on-drag" style={{flex:1, margin:10}}>
             <View style={{flexDirection:"row",backgroundColor:"#a9c6e2",paddingVertical:20, justifyContent:"center", alignItems:"center"}}>
                 <View style={{paddingRight:10}}>
-                    <Image source={require("../assets/kottak.jpg")} style={{borderRadius:140, width:140,height:140}}></Image>
+                    <Image resizeMode="contain"  source={{ uri: selectedImage }} style={{borderRadius:140, width:140,height:140}}></Image>
                 </View>
                 <View style={{paddingLeft:10}}>
-                    <MyButtons radius={190} title="Inserir Foto" width={180} color="#1a6dc0"></MyButtons>
+                    <MyButtons onPress={()=>{openModal()}} radius={190} title="Redefinir foto" width={180} color="#1a6dc0"></MyButtons>
+                    <MyButtons onPress={()=>{removePhoto()}} radius={190} title="Eliminar foto"  width={180}  color="red"></MyButtons>
                 </View>
             </View>
             <MyButtons title="Redefinir Password" width={200} color="#b79232"></MyButtons>
@@ -117,6 +121,9 @@ const EditarPerfil = (props) => {
             </View>
             <MyButtons title="Cancelar" width={350} color="#838383"></MyButtons>
         </ScrollView>
+        {
+            modalVisible && <ModalPress></ModalPress>
+        }
       <BottomNavBar perfil></BottomNavBar> 
     </>
   )

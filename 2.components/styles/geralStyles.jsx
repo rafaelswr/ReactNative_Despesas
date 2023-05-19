@@ -69,10 +69,21 @@ export default {
         marginBottom: 20,
         color: "#000000",
     },
+
     //Inputs
     headerInputs:{
         fontSize:17,
-        fontWeight:500,
-    }
+        fontWeight:500,    
+    },
+    
+    modalContainerToPhotos:{       
+        borderColor:"#dedede",
+        borderWidth:2,
+        backgroundColor:"#9dd4dcde",
+        marginHorizontal:25,
+        padding:20,
+        justifyContent:"center",
+        alignItems:"center",
+    },
     
 };

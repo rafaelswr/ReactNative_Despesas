@@ -20,10 +20,10 @@ const AdminCard = (props) => {
           <Modal visible={modalVisible} animationType="fade" transparent={true}>
             <View style={geralStyles.modal}>
                 <View style={geralStyles.modalContainer}>
-                 <Text style={geralStyles.modalText}>Tem a certeza que deseja eliminar ?</Text>
+                 <Text style={geralStyles.modalText}>Tem a certeza que deseja eliminar {props.modalReference} {props.title} ?</Text>
                   <View style={{flexDirection:"row"}}>
                     <View style={{flex:1}}>
-                        <MyButtons onPress={()=>{Alert.alert('Cidade Eliminada com sucesso!'); setModalVisible(false)}} title="Sim" color="#1a6dc0"></MyButtons>
+                        <MyButtons onPress={()=>{Alert.alert(`${props.modalReference} eliminado com sucesso`); setModalVisible(false)}} title="Sim" color="#1a6dc0"></MyButtons>
                     </View>
                     <View style={{flex:1}}>
                         <MyButtons onPress={()=>{setModalVisible(false)}}  title="Não" color="#989696"></MyButtons>
@@ -57,6 +57,7 @@ const AdminCard = (props) => {
     </View>
   )
 };
+
 
 
 
