@@ -9,6 +9,7 @@ import geralStyles from "../styles/geralStyles";
 import { Ionicons } from "@expo/vector-icons";
 import { useImagePicker } from "../services/imageService";
 
+
 const EditarPerfil = (props) => {
     const { selectedImage, modalVisible, removePhoto, openModal, ModalPress } = useImagePicker();
 
@@ -28,7 +29,6 @@ const EditarPerfil = (props) => {
    
   return (
     <>
-      <TopNavBar leftIconName="arrow-back-outline" title="Editar Perfil" rightIconName="checkmark-outline"></TopNavBar>
       <ScrollView keyboardDismissMode="on-drag" style={{flex:1, margin:10}}>
             <View style={{flexDirection:"row",backgroundColor:"#a9c6e2",paddingVertical:20, justifyContent:"center", alignItems:"center"}}>
                 <View style={{paddingRight:10}}>
@@ -124,7 +124,6 @@ const EditarPerfil = (props) => {
         {
             modalVisible && <ModalPress></ModalPress>
         }
-      <BottomNavBar perfil></BottomNavBar> 
     </>
   )
 };

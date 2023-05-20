@@ -1,25 +1,23 @@
 import React from "react"
-import {View, Text, StyleSheet, Image,ScrollView} from "react-native"
+import {View, Text, StyleSheet, Image, ScrollView,} from "react-native"
 import TopNavBar from "../components/TopNavBar";
 import BottomNavBar from "../components/BottomNavBar";
 import MyButtons from "../components/MyButtons";
 import datas from "../services/data.json";
 
-const Perfil = (props) => {
-
+const Perfil = (props, {navigation}) => {
     const user2 = datas.users[2];
 
  return (
     <>
-        <TopNavBar title={user2.username}/>
-    
         <View style={{flex:1, margin:10}}>
             <ScrollView showsVerticalScrollIndicator={false}>
             <View style={{padding:10,justifyContent:"center", alignItems:"center", flex:2}}>
                 <Image source={require("../assets/kottak.jpg")} style={{borderRadius:170, width:170,height:170}}></Image>
             </View>
             <View style={{justifyContent:"center",alignItems:"center", flex:1}}>
-                <MyButtons title="Editar Perfil" width={350} color="#1a6dc0"></MyButtons>
+                <MyButtons onPress={() => {navigation.navigate('TabScreens')}}
+                           title="Editar Perfil" width={350} color="#1a6dc0"></MyButtons>
             </View>
             <View style={{flex:3}}>
                 <Text style={{textAlign:"left",paddingVertical:10,paddingHorizontal:20, fontSize:20,fontWeight:300}}>Os meus Dados</Text>
@@ -49,9 +47,7 @@ const Perfil = (props) => {
                 </View>
             </View>    
             </ScrollView>
-        </View>  
-       
-        <BottomNavBar perfil></BottomNavBar>
+        </View>
     </>
   )
 };

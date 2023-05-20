@@ -10,20 +10,23 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
-    "@react-native-async-storage/async-storage": "^1.18.1",
+    "@react-native-async-storage/async-storage": "1.17.11",
     "@react-native-community/checkbox": "^0.5.15",
-    "@react-native-picker/picker": "^2.4.10",
+    "@react-native-picker/picker": "2.4.8",
+    "@react-navigation/bottom-tabs": "^6.5.7",
+    "@react-navigation/drawer": "^6.6.2",
+    "@react-navigation/stack": "^6.3.16",
     "expo": "~48.0.15",
     "expo-checkbox": "^2.3.1",
     "expo-file-system": "~15.2.2",
+    "expo-image-picker": "~14.1.1",
     "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
-    "react-native": "0.71.7",
+    "react-native": "0.71.8",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-image-picker": "^5.3.1",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-web": "^0.19.4",
-    "expo-image-picker": "~14.1.1"
+    "react-native-web": "~0.18.10"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

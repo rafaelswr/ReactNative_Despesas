@@ -8,7 +8,7 @@ import datas from "../services/data.json";
 import { useImagePicker } from "../services/imageService";
 
 
-const Registar = (props) => {
+const Registar = (props, navigation) => {
 
   const {selectedImage,modalVisible, ModalPress, openModal,removePhoto } = useImagePicker();
 
@@ -214,7 +214,10 @@ const Registar = (props) => {
                 </View>
             </View>
 
-          <MyButtons isDisabled={!validForm} onPress={handlingSubmit} title="Registar" width={350} color="#1a6dc0"></MyButtons>
+          <MyButtons isDisabled={!validForm} 
+                     //onPress={handlingSubmit}
+                     onPress={() => {navigation.navigate('MinhasDespesas')}}
+                     title="Registar" width={350} color="#1a6dc0"></MyButtons>
       </ScrollView>
                           {modalVisible && <ModalPress></ModalPress>}
     </>

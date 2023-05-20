@@ -1,9 +1,9 @@
 import React,{useState} from "react"
-import {View, Text,TextInput,ScrollView, StyleSheet,Image} from "react-native"
+import {View, Text,TextInput,ScrollView, StyleSheet,Image, Pressable} from "react-native"
 import MyButtons from "../components/MyButtons";
 import geralStyles from "../styles/geralStyles";
 
-const Login = (props) => {
+const Login = ({props, navigation}) => {
 
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -46,10 +46,21 @@ const Login = (props) => {
                 </View>
             </View>
             <View style={{marginBottom:10}}>
-                <MyButtons onPress={()=>onSubmitHandler()}  title="Entrar" width={350} color="#1a6dc0"></MyButtons>
+                <MyButtons //onPress={()=>onSubmitHandler()}  
+                           onPress={() => {navigation.navigate('TabScreens')}}
+                           title="Entrar" width={350} color="#1a6dc0"></MyButtons>
             </View>
-            <Text style={{color:"#1a6dc0", textAlign:"center", paddingVertical:10}}>Esqueci-me da Password </Text>
-            <Text style={{color:"black", fontSize:15, textAlign:"center", paddingVertical:10}}>Ainda não tem conta ?<Text style={{color:"#1a6dc0"}}> Clique aqui!</Text> </Text>
+            
+            <Pressable onPress={() => {navigation.navigate('NewPassword')}}>
+                       <Text style={{color:"#1a6dc0", textAlign:"center", paddingVertical:10}}>Esqueci-me da Password</Text>
+            </Pressable>
+
+            <View style={{flexDirection: 'row', justifyContent:'center', alignItens:'center', paddingVertical:10}}>
+                <Text style={{color:"black", fontSize:15, textAlign:"center"}}>Ainda não tem conta?</Text>
+                <Pressable onPress={() => {navigation.navigate('Registar')}}>
+                           <Text style={{color:"#1a6dc0"}}> Clique aqui!</Text>
+                </Pressable>
+            </View>
         </ScrollView>
     );
 }

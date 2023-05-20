@@ -6,7 +6,7 @@ import CardExpenses from "../components/CardExpenses";
 import { Picker } from "@react-native-picker/picker"
 import datas from "../services/data.json";
 
-const MinhasDespesas = (props) => {
+const MinhasDespesas = (props, navigation) => {
   const [currentFilter, setCurrentFilter] = useState("Ver Todas");
   
   var soma = 0; 
@@ -18,6 +18,8 @@ const MinhasDespesas = (props) => {
     const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     if (currentFilter === "Atrasadas") {
       return !expense.pago && diffDays < 0;
+    } else if (currentFilter === "Por Pagar") {
+      return !expense.pago && diffDays >= 0;
     } else if (currentFilter === "Apenas Pagas") {
       return expense.pago;
     } else {
@@ -26,8 +28,7 @@ const MinhasDespesas = (props) => {
   });
 
   return (
-    <>
-      <TopNavBar title="Minhas Despesas" rightIconName="add-outline"/>        
+    <>      
       <View style={{margin:10, flex:1}}> 
           <Text style={{fontSize:17,paddingTop:5}}>Seja bem-vindo <Text style={{fontWeight:"bold"}}>user1!</Text></Text>
           <View style={{flexDirection:"row",alignItems:"center", justifyContent:"space-between", paddingTop:20,paddingBottom:10}}>
@@ -38,6 +39,7 @@ const MinhasDespesas = (props) => {
                       <Picker.Item label="Ver Todas" value="Ver Todas"></Picker.Item>
                       <Picker.Item label="Apenas Pagas" value="Apenas Pagas"></Picker.Item>
                       <Picker.Item label="Atrasadas" value="Atrasadas"></Picker.Item>
+                      <Picker.Item label="Por Pagar" value="Por Pagar"></Picker.Item>
                   </Picker>
               </View>
           </View>
@@ -54,7 +56,6 @@ const MinhasDespesas = (props) => {
             </>
         }
        </View>
-      <BottomNavBar home></BottomNavBar>
     </>
   )
 };

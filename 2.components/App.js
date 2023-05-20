@@ -1,33 +1,35 @@
-import { StyleSheet, Text, View } from 'react-native';
-import MinhasDespesas from './screens/MinhasDespesas';
-import Perfil from './screens/Perfil';
-import EditarPerfil from './screens/EditarPerfil';
-import NovaDespesa from './screens/NovaDespesa';
-import DetalheDespesa from './screens/DetalheDespesa';
-import EditarDespesa from './screens/EditarDespesa';
-import HistoricoDespesas from './screens/HistoricoDespesas';
-import Registar from './screens/Registar';
-import Login from './screens/Login';
+import "react-native-gesture-handler"
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+import { StyleSheet, } from 'react-native';
 import FirstPage from './screens/FirstPage';
-import AdminCidades from './screens/Admin/AdminCidades';
-import AdminUtilizadores from './screens/Admin/AdminUtilizadores';
-import MetodosPagamento from './screens/Admin/MetodosPagamento';
-import AdminEmissores from './screens/Admin/AdminEmissores';
-import NovoEmissor from './screens/Admin/NovoEmissor';
-import AdminPage from "./screens/Admin/AdminPage";
-import AdminUser from './screens/Admin/AdminUser';
+import Login from './screens/Login';
+import Registar from './screens/Registar';
 import NewPassword from './screens/NewPassword';
+import TabScreens from './screens/TabScreens';
+
 
 export default function App() {
+  const Stack = createStackNavigator();
+  
   return (
-    <>
-    <EditarPerfil></EditarPerfil>
-    </>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='FirstPage'
+                        screenOptions={{ cardStyle: {backgroundColor: '#fff'}, headerShown: false}}>
+         <Stack.Screen name='FirstPage' component={FirstPage}/>
+         <Stack.Screen name='Login' component={Login}/>
+         <Stack.Screen name='Registar' component={Registar}/>
+         <Stack.Screen name='NewPassword' component={NewPassword}/>
+         <Stack.Screen name='TabScreens' component={TabScreens}/>
+       </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgrondColor: '#fff'
   },
 });
