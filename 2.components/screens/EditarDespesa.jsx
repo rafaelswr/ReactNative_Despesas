@@ -22,7 +22,10 @@ const EditarDespesa = (props) => {
 
   return (
     <>
-        <TopNavBar leftIconName="arrow-back-outline" title="Editar Despesa" rightIconName="checkmark-outline"></TopNavBar>
+        <TopNavBar leftIconName="arrow-back-outline" 
+                   onPressLeft={() => {props.navigation.goBack()}}
+                   title="Editar Despesa" 
+                   rightIconName="checkmark-outline"></TopNavBar>
         <ScrollView style={{flex:1,margin:10}}>
             <View style={{height:92}}>
               <Text style={{fontSize:17, fontWeight:500}}>Emissor</Text>
@@ -107,7 +110,6 @@ const EditarDespesa = (props) => {
             </View>}
 
         </ScrollView>
-        <BottomNavBar></BottomNavBar>
     </>
   )
 };

@@ -23,7 +23,9 @@ const DetalheDespesa = (props) => {
     
   return (
     <>
-        <TopNavBar leftIconName="arrow-back-outline" title="Detalhes Despesa" rightIconName="trash-outline"></TopNavBar>
+        <TopNavBar leftIconName="arrow-back-outline" 
+                   onPressLeft={() => {props.navigation.goBack()}}
+                   title="Detalhes Despesa" rightIconName="trash-outline"></TopNavBar>
         <ScrollView style={{flex:1, margin:10}}>
             
             { !exp1.pago ? 
@@ -74,9 +76,9 @@ const DetalheDespesa = (props) => {
                 <Text style={geralStyles.headerInputs}>Valor: <Text style={{fontWeight:"normal"}}>{exp1.valor}</Text></Text>
             </View>
             }
-            <MyButtons title="Editar" width={350} color="black"></MyButtons>
+            <MyButtons onPress={() => {props.navigation.navigate('EditarDespesa')}} 
+                       title="Editar" width={350} color="black"></MyButtons>
         </ScrollView>
-        <BottomNavBar></BottomNavBar>
     </>
   )
 };

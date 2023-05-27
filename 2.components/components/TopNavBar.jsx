@@ -8,7 +8,7 @@ const TopNavBar = (props) => {
     <View style={styles.container}>
             {props.leftIconName && 
                 <View style={{flex:0.3}}>
-                    <TouchableWithoutFeedback onPress={()=>{}}>
+                    <TouchableWithoutFeedback onPress={props.onPressLeft}>
                         <Ionicons name={props.leftIconName} size={34} color={"white"}></Ionicons>
                     </TouchableWithoutFeedback>
                 </View>
@@ -18,7 +18,7 @@ const TopNavBar = (props) => {
             </View>
             {props.rightIconName &&  
             <View style={{flex:0.3, justifyContent:"center", alignItems:"flex-end"}}>
-                <TouchableWithoutFeedback onPress={()=>{}}>
+                <TouchableWithoutFeedback onPress={props.onPressRight}>
                     <Ionicons name={props.rightIconName} size={36} color={"white"}></Ionicons>
                 </TouchableWithoutFeedback>
             </View>

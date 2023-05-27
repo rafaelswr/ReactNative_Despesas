@@ -4,7 +4,7 @@ import { Button } from "react-native"
 import IonIcons from "react-native-vector-icons/Ionicons"
 
 import FirstPage from './FirstPage';
-import MinhasDespesas from './MinhasDespesas';
+import DespesaScreens from './DespesaScreens';
 import ProfileScreens from './ProfileScreens';
 import HistoricoDespesas from './HistoricoDespesas';
 
@@ -13,9 +13,10 @@ const TabScreens = (props, navigation) => {
   const Tab = createBottomTabNavigator();
   
   return (
-      <Tab.Navigator 
+      <Tab.Navigator
         initialRouteName='Home'
         screenOptions={({ route }) => ({
+          headerShown: false,
           tabBarStyle: {backgroundColor: '#fff'},
           cardStyle: {backgroundColor: '#fff'},
           tabBarIcon: ({ focused, size, color }) => {
@@ -43,24 +44,15 @@ const TabScreens = (props, navigation) => {
         <Tab.Screen name="ProfileScreens" 
                     component={ProfileScreens} 
                     /*options={({ route }) => ({ title: route.params.username })} */ 
-                    options={{title: 'User01', 
-                              headerStyle: {backgroundColor: '#1A6CC1'},
-                              headerTintColor: '#fff',
-                    }} />
+                    options={{title: 'User01'}} />
 
         <Tab.Screen name="Historico" 
                     component={HistoricoDespesas} 
-                    options={{title: 'Historico', 
-                              headerStyle: {backgroundColor: '#1A6CC1'},
-                              headerTintColor: '#fff',
-                    }} />
+                    options={{title: 'Historico'}} />
 
         <Tab.Screen name="Home" 
-                    component={MinhasDespesas} 
-                    options={{title: 'Home',
-                    headerStyle: {backgroundColor: '#1A6CC1'},
-                    headerTintColor: '#fff',
-                    }} />
+                    component={DespesaScreens} 
+                    options={{title: 'Home'}} />
 
         <Tab.Screen name="Sair" component={FirstPage} />
       </Tab.Navigator>

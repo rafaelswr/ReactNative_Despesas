@@ -8,7 +8,7 @@ import datas from "../services/data.json";
 import { useImagePicker } from "../services/imageService";
 
 
-const Registar = (props, navigation) => {
+const Registar = (props) => {
 
   const {selectedImage,modalVisible, ModalPress, openModal,removePhoto } = useImagePicker();
 
@@ -75,7 +75,8 @@ const Registar = (props, navigation) => {
 
   return (
     <> 
-      <TopNavBar2 leftIconName="arrow-back-outline"></TopNavBar2>
+      <TopNavBar2 leftIconName="arrow-back-outline"
+                  onPressLeft={() => {props.navigation.goBack()}}></TopNavBar2>
       <ScrollView showsVerticalScrollIndicator={false} style={{flex:1, margin:10}}>
         <View>
           <Text style={{textAlign:"center", fontSize:45, fontWeight:300,}}>Minhas Despesas</Text>
@@ -214,9 +215,9 @@ const Registar = (props, navigation) => {
                 </View>
             </View>
 
-          <MyButtons isDisabled={!validForm} 
+          <MyButtons //isDisabled={!validForm} 
                      //onPress={handlingSubmit}
-                     onPress={() => {navigation.navigate('MinhasDespesas')}}
+                     onPress={() => {navigation.navigate('TabScreens')}}
                      title="Registar" width={350} color="#1a6dc0"></MyButtons>
       </ScrollView>
                           {modalVisible && <ModalPress></ModalPress>}

@@ -26,7 +26,9 @@ const NovaDespesa = (props) => {
     
   return (
     <>
-      <TopNavBar leftIconName="arrow-back-outline" title="Adicionar Despesa" rightIconName="checkmark-outline"></TopNavBar>
+      <TopNavBar leftIconName="arrow-back-outline" 
+                 onPressLeft={() => {props.navigation.goBack()}}
+                 title="Adicionar Despesa" rightIconName="checkmark-outline"></TopNavBar>
       <ScrollView style={{flex:1, margin:15}}>
             
             <View style={{height:92}}>
@@ -150,7 +152,6 @@ const NovaDespesa = (props) => {
         {
             modalVisible && <ModalPress></ModalPress>
         }
-      <BottomNavBar></BottomNavBar>
     </>
   )
 };

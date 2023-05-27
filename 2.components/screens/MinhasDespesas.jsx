@@ -6,7 +6,7 @@ import CardExpenses from "../components/CardExpenses";
 import { Picker } from "@react-native-picker/picker"
 import datas from "../services/data.json";
 
-const MinhasDespesas = (props, navigation) => {
+const MinhasDespesas = (props) => {
   const [currentFilter, setCurrentFilter] = useState("Ver Todas");
   
   var soma = 0; 
@@ -28,7 +28,12 @@ const MinhasDespesas = (props, navigation) => {
   });
 
   return (
-    <>      
+    <>
+      <TopNavBar leftIconName="menu-outline" 
+                 onPressLeft={() => {props.navigation.navigate('...')}}
+                 title="Minhas Despesas"
+                 rightIconName="add-outline"
+                 onPressRight={() => {props.navigation.navigate('NovaDespesa')}}></TopNavBar>
       <View style={{margin:10, flex:1}}> 
           <Text style={{fontSize:17,paddingTop:5}}>Seja bem-vindo <Text style={{fontWeight:"bold"}}>user1!</Text></Text>
           <View style={{flexDirection:"row",alignItems:"center", justifyContent:"space-between", paddingTop:20,paddingBottom:10}}>
@@ -45,7 +50,7 @@ const MinhasDespesas = (props, navigation) => {
           </View>
   
         <FlatList data={filteredExpenses} renderItem={({item})=>{
-            return(<CardExpenses emissor={item.emissor} logo={`data:image/png;base64,${props.foto}`} data={item.data} pago={item.pago} descricao={item.descricao} valor={item.valor}></CardExpenses>);
+            return(<CardExpenses onPress={() => {props.navigation.navigate('DetalheDespesa')}} emissor={item.emissor} logo={`data:image/png;base64,${props.foto}`} data={item.data} pago={item.pago} descricao={item.descricao} valor={item.valor}></CardExpenses>);
         }} keyExtractor={(item) => item.id.toString()}></FlatList>
         
         {

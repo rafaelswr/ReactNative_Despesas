@@ -27,6 +27,7 @@ const HistoricoDespesas = (props, navigation) => {
 
     return (
     <>
+        <TopNavBar leftIconName="menu-outline" title="Histórico Despesas"></TopNavBar>
         <View style={{flex:1, margin:10}}>
             <View style={{height:92,flexDirection:"row"}}>
                 <View style={{flex:1, paddingHorizontal:10}}>

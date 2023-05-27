@@ -29,6 +29,10 @@ const EditarPerfil = (props) => {
    
   return (
     <>
+      <TopNavBar leftIconName="arrow-back-outline" 
+                 onPressLeft={() => {props.navigation.goBack()}}
+                 title="Editar Perfil" 
+                 rightIconName="checkmark-outline"></TopNavBar>
       <ScrollView keyboardDismissMode="on-drag" style={{flex:1, margin:10}}>
             <View style={{flexDirection:"row",backgroundColor:"#a9c6e2",paddingVertical:20, justifyContent:"center", alignItems:"center"}}>
                 <View style={{paddingRight:10}}>
@@ -119,7 +123,8 @@ const EditarPerfil = (props) => {
                     </View>
                 </View>
             </View>
-            <MyButtons title="Cancelar" width={350} color="#838383"></MyButtons>
+            <MyButtons title="Cancelar" width={350} color="#838383"
+                        onPress={() => {navigation.goBack()}}></MyButtons>
         </ScrollView>
         {
             modalVisible && <ModalPress></ModalPress>

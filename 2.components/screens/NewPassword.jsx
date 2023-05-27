@@ -55,7 +55,9 @@ const NewPassword = (props) => {
                 <MyButtons onPress={()=>{Alert.alert('Novo Método adicionado!')}} title="Guardar" color="#1a6dc0"></MyButtons>
             </View>
             <View style={{flex:1}}>
-                <MyButtons onPress={()=>{Alert.alert('Todas as alterações serão ignoradas.')}}  title="Cancelar" color="#989696"></MyButtons>
+                <MyButtons onPress={()=>{props.navigation.goBack()}}  
+                           title="Cancelar" 
+                           color="#989696"></MyButtons>
             </View>
         </View>
     </View>

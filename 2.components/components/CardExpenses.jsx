@@ -21,7 +21,7 @@ const CardExpenses = (props) => {
 
    
   return (
-        <TouchableHighlight underlayColor={"transparent"} onPress={()=>{}}>
+        <TouchableHighlight underlayColor={"transparent"} onPress={props.onPress}>
         <View style={{borderColor:"#C3C3C2",borderWidth:2, backgroundColor: props.pago ? "#4efe7f" : 
       (calcularDifDias() < 0 ? "red" : (calcularDifDias() > 3 ? "#D9D9D9":"orange")),marginVertical:5,height:150, padding:7, borderRadius:10}}>
             <View style={{ flexDirection:"row"}}>
