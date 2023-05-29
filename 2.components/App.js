@@ -27,7 +27,7 @@ import OnLogout from "./components/OnLogout";
 import NovaDespesa from "./screens/NovaDespesa";
 import NovoEmissor from "./screens/Admin/NovoEmissor";
 import AdminUtilizadores from "./screens/Admin/AdminUtilizadores";
-import DrawerScreens from "./screens/DrawerScreens";
+import DrawerScreens from "./navigation/DrawerScreens";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -172,8 +172,8 @@ const AppNavigation = ({ isAdmin, isAuthenticated}) => {
 };
 
 const App = () => {
-  const isAdmin = false; // Defina a lógica para determinar se o usuário é um administrador
-  const isAuthenticated = true; // Defina a lógica para determinar se o usuário está autenticado
+  const isAdmin = false; 
+  const isAuthenticated = true; 
 
   return <AppNavigation isAdmin={isAdmin} isAuthenticated={isAuthenticated} />;
 };

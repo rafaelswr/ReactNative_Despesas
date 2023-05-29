@@ -1,12 +1,12 @@
 import "react-native-gesture-handler";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import AdminEmissores from './Admin/AdminEmissores';
-import AdminCidades from './Admin/AdminCidades';
-import MetodosPagamento from './Admin/MetodosPagamento';
-import AdminUtilizadores from './Admin/AdminUtilizadores';
-import AdminPage from './Admin/AdminPage';
-import NovoEmissor from "./Admin/NovoEmissor";
+import AdminEmissores from '../screens/Admin/AdminEmissores';
+import AdminCidades from '../screens/Admin/AdminCidades';
+import MetodosPagamento from '../screens/Admin/MetodosPagamento';
+import AdminUtilizadores from '../screens/Admin/AdminUtilizadores';
+import AdminPage from '../screens/Admin/AdminPage';
+import NovoEmissor from "../screens/Admin/NovoEmissor";
 
 
 
