@@ -1,6 +1,8 @@
-import React,{useState} from "react"
+import React,{useState} from "react"; 
 import {View, Text, StyleSheet, TextInput,ScrollView, Image, KeyboardAvoidingView} from "react-native"
 import TopNavBar from "../components/TopNavBar";
+import { useNavigation } from '@react-navigation/native';
+
 import BottomNavBar from "../components/BottomNavBar";
 import MyButtons from "../components/MyButtons";
 import datas from "../services/data.json";
@@ -26,14 +28,15 @@ const EditarPerfil = (props) => {
     const [city,setCity] = useState("");
     const [currentFilter, setCurrentFilter] = useState("");
 
-   
+    const TabNavigation = props.navigation.getParent('Tab');
+
   return (
     <>
       <TopNavBar leftIconName="arrow-back-outline" 
-                 onPressLeft={() => {props.navigation.goBack()}}
+                 onPressLeft={()=>{props.navigation.goBack()}}
                  title="Editar Perfil" 
                  rightIconName="checkmark-outline"></TopNavBar>
-      <ScrollView keyboardDismissMode="on-drag" style={{flex:1, margin:10}}>
+      <ScrollView keyboardDismissMode="on-drag" showsVerticalScrollIndicator={false} style={{flex:1, margin:10}}>
             <View style={{flexDirection:"row",backgroundColor:"#a9c6e2",paddingVertical:20, justifyContent:"center", alignItems:"center"}}>
                 <View style={{paddingRight:10}}>
                     <Image resizeMode="contain"  source={{ uri: selectedImage }} style={{borderRadius:140, width:140,height:140}}></Image>

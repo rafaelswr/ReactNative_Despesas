@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import CardExpenses from "../components/CardExpenses";
 import datas from "../services/data.json";
 
-const HistoricoDespesas = (props, navigation) => {
+const HistoricoDespesas = (props) => {
 
     const months = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
     var dataDespesa = new Date(props.data);
@@ -27,7 +27,7 @@ const HistoricoDespesas = (props, navigation) => {
 
     return (
     <>
-        <TopNavBar leftIconName="menu-outline" title="Histórico Despesas"></TopNavBar>
+        <TopNavBar  title="Histórico Despesas"></TopNavBar>
         <View style={{flex:1, margin:10}}>
             <View style={{height:92,flexDirection:"row"}}>
                 <View style={{flex:1, paddingHorizontal:10}}>

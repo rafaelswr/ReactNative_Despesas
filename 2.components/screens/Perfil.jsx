@@ -10,14 +10,14 @@ const Perfil = ({props, navigation}) => {
 
  return (
     <>
-        <TopNavBar leftIconName="menu-outline" title="Miguel Rodrigues"></TopNavBar>
+        <TopNavBar title="Miguel Rodrigues"></TopNavBar>
         <View style={{flex:1, margin:10}}>
             <ScrollView showsVerticalScrollIndicator={false}>
             <View style={{padding:10,justifyContent:"center", alignItems:"center", flex:2}}>
-                <Image source={require("../assets/kottak.jpg")} style={{borderRadius:170, width:170,height:170}}></Image>
+                <Image source={require("../assets/icon.png")} style={{borderRadius:170, width:170,height:170}}></Image>
             </View>
             <View style={{justifyContent:"center",alignItems:"center", flex:1}}>
-                <MyButtons onPress={() => {navigation.navigate('EditarPerfil')}}
+                <MyButtons onPress={() => {navigation.navigate('EditarPerfil', {user:user2})}}
                            title="Editar Perfil" width={350} color="#1a6dc0"></MyButtons>
             </View>
             <View style={{flex:3}}>
@@ -55,6 +55,3 @@ const Perfil = ({props, navigation}) => {
 
 export default Perfil;
 
-const styles=StyleSheet.create({
-
-});

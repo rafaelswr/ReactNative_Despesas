@@ -15,10 +15,10 @@ const NovaDespesa = (props) => {
 
     const {selectedImage, modalVisible, openModal, removePhoto, ModalPress} = useImagePicker();
 
-    const [currentFilter, setCurrentFilter] = useState("Meo, Altice");
+    const [currentFilter, setCurrentFilter] = useState("-");
     const [descricao, setDescricao] = useState("");
     const [data, setData] = useState(null);
-    const [value, setValue] = useState("17.99");
+    const [value, setValue] = useState("");
     const [metodoPagamento, setMetodoPagamento] = useState("Multibanco");
     const [isSelected, setSelection] = useState(false);
     const [entidade, setEntidade] = useState("");
@@ -36,6 +36,7 @@ const NovaDespesa = (props) => {
               <View style={{borderWidth:1 ,borderColor:"#bdbdbd", borderRadius:10,}}>
                   <Picker style={{borderColor:"red", width:360, borderWidth:1}} mode="dropdown" 
                   selectedValue={currentFilter} onValueChange={(value)=>setCurrentFilter(value)}>
+                    <Picker.Item label="-" value="-"></Picker.Item>
                          {datas.issuers.map(issuer => (
                         <Picker.Item key={issuer.id} label={issuer.nome} value={issuer.nome} />
                      ))}    
@@ -118,6 +119,7 @@ const NovaDespesa = (props) => {
               <View style={{borderWidth:1 ,borderColor:"#bdbdbd", borderRadius:10,}}>
                   <Picker style={{borderColor:"red", width:360, borderWidth:1}} mode="dropdown" 
                   selectedValue={metodoPagamento} onValueChange={(value)=>setMetodoPagamento(value)}>
+                    <Picker.Item label="-" value="-"></Picker.Item>
                       {datas.metodosPagamento.map(item => (
                         <Picker.Item key={item} label={item} value={item} />
                      ))}    
@@ -126,7 +128,7 @@ const NovaDespesa = (props) => {
             </View>
 
 
-            {metodoPagamento=="Multibanco" && 
+            {metodoPagamento=="multibanco" && 
             <View style={{backgroundColor:"#edecec", marginTop:10}}>
                 <View style={{flex:1, flexDirection:"row"}}>
                     <View style={{flex:0.4,padding:10,}}>

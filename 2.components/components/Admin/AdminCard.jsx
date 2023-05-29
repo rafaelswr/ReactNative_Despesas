@@ -4,6 +4,7 @@ import {View, Text, Pressable,Modal,Alert} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import MyButtons from "../MyButtons";
 import geralStyles from "../../styles/geralStyles";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const AdminCard = (props) => {
   const [locked, setLocked] = useState(props.name);
@@ -37,6 +38,7 @@ const AdminCard = (props) => {
 
  
   return (
+    <TouchableOpacity onPress={props.onPress}>
     <View style={{flex:1, height:70, flexDirection:"row", marginVertical:5,opacity:locked=="lock-closed-outline" ? 0.5 : 1.0}}>
         <View style={{backgroundColor:props.backgroundColor ? props.backgroundColor: "white",flex:0.85, borderRightColor:"black", borderRightWidth:2,justifyContent:"center",alignItems:"flex-start",paddingHorizontal:10}}>
             <Text style={{fontSize:20,fontWeight:500}}>{props.title}</Text>
@@ -55,6 +57,7 @@ const AdminCard = (props) => {
                 modalVisible && <ModalPress></ModalPress>
             }
     </View>
+    </TouchableOpacity>
   )
 };
 
@@ -63,4 +66,3 @@ const AdminCard = (props) => {
 
 
 export default AdminCard;
-

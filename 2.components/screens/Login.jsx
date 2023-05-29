@@ -1,5 +1,6 @@
-import React,{useState} from "react"
-import {View, Text,TextInput,ScrollView, StyleSheet,Image, Pressable} from "react-native"
+import {useState} from "react";
+import * as React from 'react';
+import {View, Text,TextInput,ScrollView, StyleSheet,Image, Pressable} from "react-native";
 import MyButtons from "../components/MyButtons";
 import geralStyles from "../styles/geralStyles";
 
@@ -21,6 +22,7 @@ const Login = ({props, navigation}) => {
         }
     }   
         
+
 
     return(
         <ScrollView style={{flex:1, margin:10}}> 
@@ -47,7 +49,8 @@ const Login = ({props, navigation}) => {
             </View>
             <View style={{marginBottom:10}}>
                 <MyButtons //onPress={()=>onSubmitHandler()}  
-                           onPress={() => {navigation.navigate('TabScreens')}}
+                           onPress={() => {
+                            navigation.navigate('TabScreens')}}
                            title="Entrar" width={350} color="#1a6dc0"></MyButtons>
             </View>
             

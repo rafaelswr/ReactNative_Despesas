@@ -9,21 +9,24 @@ import { Ionicons } from "@expo/vector-icons";
 import datas from "../../services/data.json";
 
 const AdminUser = (props) => {
-    const [name, setName ] = useState("");
-    const [apelido, setApelido ] = useState("");
-    const [username, setUsername ] = useState("");
-    const [morada, setMorada ] = useState("");
+
+    const {item} = props.route.params; 
+
+    const [name, setName ] = useState(item.name);
+    const [apelido, setApelido ] = useState(item.apelido);
+    const [username, setUsername ] = useState(item.username);
+    const [morada, setMorada ] = useState(item.morada);
     const [codPostal_1,setCodePostal_1] = useState("");
     const [codPostal_2,setCodePostal_2] = useState("");
     const postalCode = `${codPostal_1}-${codPostal_2}`;
-    const [city, setCity] = useState("-");
-    const [date, setDate] = useState("");
+    const [city, setCity] = useState(item.city);
+    const [date, setDate] = useState(item.date);
 
 
 
     return (
         <View style={adminStyles.containerMain}>
-            <AdminTopNav title="User01" iconName="trash-outline"></AdminTopNav>
+            <AdminTopNav title={username} iconName="trash-outline"></AdminTopNav>
             <View style={adminStyles.horizontalLine}></View>
             <MyButtons title="Redefinir Password" width={200} color="#b79232"></MyButtons>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -117,7 +120,7 @@ const AdminUser = (props) => {
                         <MyButtons onPress={()=>{Alert.alert('Cidade guardada com sucesso!')}} title="Guardar" color="#1a6dc0"></MyButtons>
                     </View>
                     <View style={{flex:1}}>
-                        <MyButtons onPress={()=>{Alert.alert('Todas as alterações serão ignoradas.')}}  title="Cancelar" color="#989696"></MyButtons>
+                        <MyButtons onPress={()=>{Alert.alert('Todas as alterações serão ignoradas.'); props.navigation.goBack();}}  title="Cancelar" color="#989696"></MyButtons>
                     </View>
                 </View>
                 
@@ -128,4 +131,3 @@ const AdminUser = (props) => {
 };
 
 export default AdminUser;
-

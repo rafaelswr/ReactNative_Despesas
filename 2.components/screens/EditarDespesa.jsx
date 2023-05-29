@@ -8,22 +8,28 @@ import Checkbox from "expo-checkbox";
 import datas from "../services/data.json";
 import geralStyles from "../styles/geralStyles";
 
+
 const EditarDespesa = (props) => {
 
-    const [currentFilter, setCurrentFilter] = useState("");
-    const [descricao, setDescricao] = useState("");
-    const [data, setData] = useState(null);
-    const [value, setValue] = useState("");
-    const [metodoPagamento, setMetodoPagamento] = useState("");
-    const [isSelected, setSelection] = useState(false);
-    const [entidade, setEntidade] = useState("");
-    const [referencia, setReferencia] = useState("");
+    const itemDespesa = props.route.params.despesa; 
+
+    console.log(itemDespesa.metodoPagamento);
+    const [currentFilter, setCurrentFilter] = useState(itemDespesa.emissor);
+    const [descricao, setDescricao] = useState(itemDespesa.descricao);
+    const [data, setData] = useState(itemDespesa.data);
+    const [valor, setValor] = useState(itemDespesa.valor.toString());
+    const [metodoPagamento, setMetodoPagamento] = useState(itemDespesa.metodoPagamento);
+    const [isSelected, setSelection] = useState(itemDespesa.pago);
+    const [entidade, setEntidade] = useState(itemDespesa.metodoPagamento =="multibanco" ? itemDespesa.entidade: null);
+    const [referencia, setReferencia] = useState(itemDespesa.metodoPagamento =="multibanco"? itemDespesa.referencia:null);
   
+ 
+
 
   return (
     <>
         <TopNavBar leftIconName="arrow-back-outline" 
-                   onPressLeft={() => {props.navigation.goBack()}}
+                   onPressLeft={() => {props.navigation.goBack();}}
                    title="Editar Despesa" 
                    rightIconName="checkmark-outline"></TopNavBar>
         <ScrollView style={{flex:1,margin:10}}>
@@ -31,7 +37,7 @@ const EditarDespesa = (props) => {
               <Text style={{fontSize:17, fontWeight:500}}>Emissor</Text>
               <View style={{borderWidth:1 ,borderColor:"#bdbdbd", borderRadius:10,}}>
                   <Picker style={{borderColor:"red", width:360, borderWidth:1}} mode="dropdown" 
-                  selectedValue={currentFilter} onValueChange={(value)=>setCurrentFilter(value)}>
+                  selectedValue={itemDespesa.emissor} onValueChange={(value)=>setCurrentFilter(value)}>
                      
                      {datas.issuers.map(issuer => (
                         <Picker.Item key={issuer.id} label={issuer.nome} value={issuer.nome} />
@@ -60,7 +66,7 @@ const EditarDespesa = (props) => {
                 <Text style={geralStyles.headerInputs}>Valor</Text>
                 <View style={{flexDirection:"row", alignItems:"center"}}>
                     <View style={{flex:0.3}}>
-                        <TextInput keyboardType="number-pad" value={value} onChangeText={setValue} dataDetectorTypes="calendarEvent" style={styles.textInputContainer}></TextInput>
+                        <TextInput value={valor} onChangeText={(value)=>setValor(value)} style={styles.textInputContainer}></TextInput>
                     </View>
                     <Ionicons style={{ paddingLeft:5}} size={30} name="logo-euro"></Ionicons>
                 </View>
@@ -84,9 +90,11 @@ const EditarDespesa = (props) => {
               <View style={{borderWidth:1 ,borderColor:"#bdbdbd", borderRadius:10,}}>
                   <Picker style={{borderColor:"red", width:360, borderWidth:1}} mode="dropdown" 
                   selectedValue={metodoPagamento} onValueChange={(value)=>setMetodoPagamento(value)}>
+                        
                         {datas.metodosPagamento.map(metodo => (
-                        <Picker.Item key={metodo} label={metodo} value={metodo} />
-                     ))}      
+                        
+                            <Picker.Item key={metodo} label={metodo} value={metodo} />
+                        ))}      
                   </Picker>
               </View> 
             </View>
@@ -105,7 +113,7 @@ const EditarDespesa = (props) => {
                 </View>
                 
                 <View style={{padding:10}}>
-                    <Text style={{fontSize:20,fontWeight:"bold"}}>Valor: {value}</Text>
+                    <Text style={{fontSize:20,fontWeight:"bold"}}>Valor: {valor}</Text>
                 </View>
             </View>}
 

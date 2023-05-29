@@ -23,7 +23,7 @@ const AdminEmissores = (props) => {
             }}></Pesquisa>
             
             <View style={{paddingVertical:5}}>
-                <TouchableOpacity style={styles.buttonNovo}>
+                <TouchableOpacity style={styles.buttonNovo} onPress={()=>{props.navigation.navigate("NovoEmissor");}}>
                     <View style={styles.orientation}>
                         <Ionicons size={20} name='add-outline'></Ionicons>
                         <Text style={styles.textButton}>Novo</Text>

@@ -55,7 +55,7 @@ const NovoEmissor = (props) => {
         </View> 
         <View style={{marginVertical:40}}>
             <MyButtons onPress={()=>{Alert.alert("Adicionado com Sucesso")}}  title="Adicionar" width={350} color="#1a6dc0"></MyButtons>
-            <MyButtons onPress={()=>{Alert.alert("Tem a certeza, os dados vão ser perdidos!")}}  title="Cancelar " width={350} color="#989696"></MyButtons>
+            <MyButtons onPress={()=>{Alert.alert("Tem a certeza, os dados vão ser perdidos!");props.navigation.goBack();}}  title="Cancelar " width={350} color="#989696"></MyButtons>
         </View>
         {
             modalVisible && <ModalPress></ModalPress>
