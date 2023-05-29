@@ -46,7 +46,8 @@ const EditarPerfil = (props) => {
                     <MyButtons onPress={()=>{removePhoto()}} radius={190} title="Eliminar foto"  width={180}  color="red"></MyButtons>
                 </View>
             </View>
-            <MyButtons title="Redefinir Password" width={200} color="#b79232"></MyButtons>
+            <MyButtons onPress={() => {props.navigation.navigate('NewPassword')}}
+                       title="Redefinir Password" width={200} color="#b79232"></MyButtons>
 
             <View style={{flexDirection:"row", height:92}}>
                 <View style={{ flex:1, paddingHorizontal:5,}}>

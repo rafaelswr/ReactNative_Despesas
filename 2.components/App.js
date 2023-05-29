@@ -62,7 +62,7 @@ const AppNavigation = ({ isAdmin, isAuthenticated}) => {
 }
 
 const App = () => {
-  const isAdmin = false; 
+  const isAdmin = true; 
 
   return <AppNavigation isAdmin={isAdmin} />;
 };

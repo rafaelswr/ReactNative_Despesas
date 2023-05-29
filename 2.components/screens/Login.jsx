@@ -50,7 +50,7 @@ const Login = ({props, navigation}) => {
             <View style={{marginBottom:10}}>
                 <MyButtons //onPress={()=>onSubmitHandler()}  
                            onPress={() => {
-                            navigation.navigate('TabScreens')}}
+                            navigation.navigate('DrawerScreens')}}
                            title="Entrar" width={350} color="#1a6dc0"></MyButtons>
             </View>
             

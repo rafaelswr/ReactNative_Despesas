@@ -28,7 +28,8 @@ const AdminUser = (props) => {
         <View style={adminStyles.containerMain}>
             <AdminTopNav title={username} iconName="trash-outline"></AdminTopNav>
             <View style={adminStyles.horizontalLine}></View>
-            <MyButtons title="Redefinir Password" width={200} color="#b79232"></MyButtons>
+            <MyButtons onPress={() => {props.navigation.navigate('NewPassword')}}
+                       title="Redefinir Password" width={200} color="#b79232"></MyButtons>
             <ScrollView showsVerticalScrollIndicator={false}>
             <View style={{height:92}}>
                 <View style={{ flex:1, paddingHorizontal:5,}}>
