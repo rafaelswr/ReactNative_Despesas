@@ -7,17 +7,17 @@ import datas from "../services/data.json";
 
 const Perfil = ({props, navigation}) => {
     const user2 = datas.users[2];
-
+   
  return (
     <>
-        <TopNavBar title="Miguel Rodrigues"></TopNavBar>
+        <TopNavBar title={user2.username}></TopNavBar>
         <View style={{flex:1, margin:10}}>
             <ScrollView showsVerticalScrollIndicator={false}>
             <View style={{padding:10,justifyContent:"center", alignItems:"center", flex:2}}>
                 <Image source={require("../assets/icon.png")} style={{borderRadius:170, width:170,height:170}}></Image>
             </View>
             <View style={{justifyContent:"center",alignItems:"center", flex:1}}>
-                <MyButtons onPress={() => {navigation.navigate('EditarPerfil', {user:user2})}}
+                 <MyButtons onPress={() => {navigation.navigate("UserStack", {screen:'EditarPerfil',initial: false, params:{user:user2}})}}
                            title="Editar Perfil" width={350} color="#1a6dc0"></MyButtons>
             </View>
             <View style={{flex:3}}>

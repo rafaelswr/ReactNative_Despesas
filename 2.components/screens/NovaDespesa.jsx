@@ -1,15 +1,12 @@
 import React,{useState} from "react"
 import {View, Text,ScrollView,Image,Modal,StyleSheet,TouchableOpacity, TextInput} from "react-native"
 import TopNavBar from "../components/TopNavBar";
-import BottomNavBar from "../components/BottomNavBar";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import datas from "../services/data.json";
 
 import { useImagePicker } from "../services/imageService";
-
-
 
 const NovaDespesa = (props) => {
 
@@ -27,7 +24,11 @@ const NovaDespesa = (props) => {
   return (
     <>
       <TopNavBar leftIconName="arrow-back-outline" 
-                 onPressLeft={() => {props.navigation.goBack()}}
+                onPressLeft={()=>{
+                    if (props.navigation.canGoBack())
+                    props.navigation.navigate('Home')
+                    else
+                        props.navigation.navigate('Home')}}
                  title="Adicionar Despesa" rightIconName="checkmark-outline"></TopNavBar>
       <ScrollView style={{flex:1, margin:15}}>
             

@@ -29,10 +29,7 @@ import NovoEmissor from "./screens/Admin/NovoEmissor";
 import AdminUtilizadores from "./screens/Admin/AdminUtilizadores";
 import DrawerScreens from "./navigation/DrawerScreens";
 
-const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
-const Tab = createBottomTabNavigator();
-
+/*
 const AppNavigation = ({ isAdmin, isAuthenticated}) => {
  
   return (
@@ -47,15 +44,17 @@ const AppNavigation = ({ isAdmin, isAuthenticated}) => {
           <Stack.Screen name="EditarDespesa" component={EditarDespesa} />
           <Stack.Screen name="EditarPerfil" component={EditarPerfil} />
           <Stack.Screen name="Registar" component={Registar} />
-          
           <Stack.Screen name="NovaDespesa" component={NovaDespesa} />
           <Stack.Screen name="AdminUser" component={AdminUser} />
           <Stack.Screen name="AdminUtilizadores" component={AdminUtilizadores} />
           
           <Stack.Screen name="HistoricoDespesas" component={HistoricoDespesas} />
-          {!isAdmin ?
-          <Stack.Screen name='TabScreens' component={TabScreens}/>
-: <Stack.Screen name='DrawerScreens' component={DrawerScreens}/>}
+          {
+            !isAdmin ?
+            <Stack.Screen name='TabScreens' component={TabScreens}/>    
+            : 
+            <Stack.Screen name='DrawerScreens' component={DrawerScreens}/>
+          }
        </Stack.Navigator>
     </NavigationContainer>
   );
@@ -63,29 +62,33 @@ const AppNavigation = ({ isAdmin, isAuthenticated}) => {
 
 const App = () => {
   const isAdmin = true; 
-
+  //const isAuthenticated = true; 
   return <AppNavigation isAdmin={isAdmin} />;
 };
 
 export default App;
 
-/* 
+*/
+
+
+const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
+
 const AdminStack = () => (
   <Stack.Navigator screenOptions={{ cardStyle: {backgroundColor: "#fff"}, headerShown:false}}>
-    <Stack.Screen name="AdminUser" component={AdminUser}/>
     <Stack.Screen name="NovoEmissor" component={NovoEmissor}/>
-   
   </Stack.Navigator>
 );
 
 const UserStack = () => (
   <Stack.Navigator screenOptions={{ cardStyle: {backgroundColor: "#fff"}, headerShown:false}}>
-    <Stack.Screen name="MinhasDespesas" component={MinhasDespesas} />
+    <Stack.Screen name="HistoricoDespesas" component={HistoricoDespesas} />
     <Stack.Screen name="DetalheDespesa" component={DetalheDespesa} />
     <Stack.Screen name="EditarDespesa" component={EditarDespesa} />
     <Stack.Screen name="EditarPerfil" component={EditarPerfil} />
-    <Stack.Screen name="HistoricoDespesas" component={HistoricoDespesas} />
-    
+    <Stack.Screen name="NovaDespesa" component={NovaDespesa}></Stack.Screen>
+
   </Stack.Navigator>
 );
 
@@ -100,18 +103,28 @@ const AuthStack = () => (
 
 const AppNavigation = ({ isAdmin, isAuthenticated}) => {
   return (
-    <NavigationContainer>
-      
-      {isAuthenticated ? (
+    <NavigationContainer independent={true}>
+
+     {isAuthenticated ? (
         isAdmin ? (
-          <Drawer.Navigator gestureEnabled={false} screenOptions={{swipeEnabled:true, drawerType:"front", keyboardDismissMode:"on-drag", headerShown:false}}>
+          <Drawer.Navigator gestureEnabled={false} 
+              screenOptions={{
+                drawerStyle:{backgroundColor:"#7cb9f4"},
+                drawerLabelStyle:{fontSize:16},
+                drawerInactiveTintColor:"black",
+                swipeEnabled:true,
+                drawerType:"front",
+                keyboardDismissMode:"on-drag",
+                headerShown:false, 
+            
+              }}>
             <Drawer.Screen name="AdminStack" component={AdminStack} options={{drawerItemStyle: { height: 0 }}}/>
-            <Drawer.Screen name="AdminEmissores" component={AdminEmissores} />
-            <Drawer.Screen name="AdminCidades" component={AdminCidades} />
-            <Drawer.Screen name="AdminPage" component={AdminPage} />
-            <Drawer.Screen name="MetodosPagamento" component={MetodosPagamento} />
-            <Drawer.Screen name="AdminUtilizadores" component={AdminUtilizadores} />
-          
+            <Drawer.Screen name="Emissores" component={AdminEmissores} />
+            <Drawer.Screen name="Cidades" component={AdminCidades}/>
+            <Drawer.Screen name="AdminPage" component={AdminPage} options={{title:"Página Administrador"}}/>
+            <Drawer.Screen name="MetodosPagamento" component={MetodosPagamento} options={{title:"Métodos Pagamento"}} />
+            <Drawer.Screen name="Utilizadores" component={AdminUtilizadores} />
+            <Drawer.Screen name="Sair" component={AdminUtilizadores}/>
           </Drawer.Navigator>
         ) : (
           <Tab.Navigator id="Tab"
@@ -142,11 +155,9 @@ const AppNavigation = ({ isAdmin, isAuthenticated}) => {
                   iconName = focused ? 'log-out' : 'log-out';
                   textIcon = "Sair";
                   break;
-               
               }
 
               return (
-                
                   <View style={{padding:5, justifyContent:"center",alignItems:"center"}}>
                     <Ionicons name={iconName} size={25} color={focused ? "#1b6cc0" : "black"}></Ionicons>
                     <Text style={{color:focused ? "#1b6cc0":"black",fontWeight:"500", fontSize:13, paddingBottom:3}}>{textIcon}</Text>
@@ -155,14 +166,14 @@ const AppNavigation = ({ isAdmin, isAuthenticated}) => {
             },
           
         })}>
-        <Tab.Screen name="Perfil" component={Perfil}></Tab.Screen>
-        <Tab.Screen name="Historico" component={HistoricoDespesas} />
-        <Tab.Screen name="Home" component={MinhasDespesas} />
-        <Tab.Screen name="Sair">
-            {(props) => <OnLogout show={true} {...props}/>}
-        </Tab.Screen>
-        <Tab.Screen name="UserStack" component={UserStack} options={{ tabBarButton: () => null, tabBarVisible: false}}/> 
-          </Tab.Navigator>
+          <Tab.Screen name="UserStack" component={UserStack} options={{ tabBarButton: () => null, tabBarVisible: false}}/> 
+          <Tab.Screen name="Perfil" component={Perfil}></Tab.Screen>
+          <Tab.Screen name="Historico" component={HistoricoDespesas} />
+          <Tab.Screen name="Home" component={MinhasDespesas} />
+          <Tab.Screen name="Sair">
+              {(props) => <OnLogout show={true} {...props}/>}
+          </Tab.Screen>
+        </Tab.Navigator>
         )
       ) : (
         <AuthStack />
@@ -172,7 +183,7 @@ const AppNavigation = ({ isAdmin, isAuthenticated}) => {
 };
 
 const App = () => {
-  const isAdmin = false; 
+  const isAdmin = true;  
   const isAuthenticated = true; 
 
   return <AppNavigation isAdmin={isAdmin} isAuthenticated={isAuthenticated} />;
@@ -180,7 +191,7 @@ const App = () => {
 
 export default App;
 
-*/
+
 /*
 
 export default function App() {

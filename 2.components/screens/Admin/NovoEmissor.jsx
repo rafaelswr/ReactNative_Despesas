@@ -1,5 +1,5 @@
-import React,{useState} from "react";
-import {View,Image,Alert,Text,TextInput, StyleSheet} from "react-native";
+import React, { useState } from "react";
+import { View, Image, Text, TextInput } from "react-native";
 import adminStyles from "../../styles/adminStyles";
 import AdminTopNav from "../../components/Admin/AdminTopNav";
 import MyButtons from "../../components/MyButtons";
@@ -7,13 +7,22 @@ import { Picker } from "@react-native-picker/picker";
 import geralStyles from "../../styles/geralStyles";
 import datas from "../../services/data.json";
 import { useImagePicker } from "../../services/imageService";
+//firestore
+import { adminManagementCreateAsync } from "../../services/firebaseService";
 
 const NovoEmissor = (props) => {
 
+    const [emissor,setEmissor] = useState("");
+    const [tipoPagamento, setTipoPagamento] = useState("");
+
     const {ModalPress, removePhoto, openModal, selectedImage, modalVisible} = useImagePicker();
 
-    const [emissor,setEmissor] = useState("");
-    const [tipoPagamento,setTipoPagamento] = useState("");
+    const onSuccess = _ =>{
+        alert("Novo Emissor adicionado");
+        setEmissor("");
+        setTipoPagamento("");
+    }
+
 
   return (
     <View style={adminStyles.containerMain}>
@@ -54,8 +63,24 @@ const NovoEmissor = (props) => {
             
         </View> 
         <View style={{marginVertical:40}}>
-            <MyButtons onPress={()=>{Alert.alert("Adicionado com Sucesso")}}  title="Adicionar" width={350} color="#1a6dc0"></MyButtons>
-            <MyButtons onPress={()=>{Alert.alert("Tem a certeza, os dados vão ser perdidos!");props.navigation.goBack();}}  title="Cancelar " width={350} color="#989696"></MyButtons>
+            
+            <MyButtons onPress={()=>{
+
+                if(emissor == "" || tipoPagamento =="-"){
+                    alert("Deixou campos em vazio!");
+                }else{
+                    const newEmissor = {
+                        nome:emissor, 
+                        pagamentoPredefinido:tipoPagamento,
+                    }
+
+                   adminManagementCreateAsync(newEmissor,"emissores",onSuccess);
+            
+                }
+               
+            }}  title="Adicionar" width={350} color="#1a6dc0"/>
+
+            <MyButtons onPress={()=>{}}  title="Cancelar " width={350} color="#989696"/>
         </View>
         {
             modalVisible && <ModalPress></ModalPress>

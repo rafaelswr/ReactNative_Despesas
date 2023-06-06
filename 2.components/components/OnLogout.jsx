@@ -15,10 +15,17 @@ const OnLogout = (props) => {
                      <Text style={geralStyles.modalText}>Tem a certeza que deseja Terminar Sessão?</Text>
                       <View style={{flexDirection:"row"}}>
                         <View style={{flex:1}}>
-                            <MyButtons onPress={()=>{props.navigation.navigate('Login')}} title="Sim" color="#1a6dc0"></MyButtons>
+                            <MyButtons    onPress={()=>{
+                    if (props.navigation.canGoBack())
+                        props.navigation.goBack()
+                    else
+                        props.navigation.navigate('MinhasDespesas')}} title="Sim" color="#1a6dc0"></MyButtons>
                         </View>
                         <View style={{flex:1}}>
-                            <MyButtons onPress={()=>{props.navigation.popToTop();setShowModal(false);}}  title="Não" color="#989696"></MyButtons>
+                            <MyButtons onPress={()=>{if (props.navigation.canGoBack())
+                        props.navigation.goBack()
+                    else
+                        props.navigation.navigate('MinhasDespesas');setShowModal(false);}}  title="Não" color="#989696"></MyButtons>
                         </View>
                      </View>
                     </View>

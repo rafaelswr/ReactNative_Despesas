@@ -29,7 +29,11 @@ const EditarDespesa = (props) => {
   return (
     <>
         <TopNavBar leftIconName="arrow-back-outline" 
-                   onPressLeft={() => {props.navigation.goBack();}}
+                      onPressLeft={()=>{
+                        if (props.navigation.canGoBack())
+                            props.navigation.goBack();
+                        else
+                            props.navigation.navigate('DetalheDespesa')}}
                    title="Editar Despesa" 
                    rightIconName="checkmark-outline"></TopNavBar>
         <ScrollView style={{flex:1,margin:10}}>
@@ -45,7 +49,7 @@ const EditarDespesa = (props) => {
                   </Picker>
               </View> 
             </View>
-
+            
             <View style={{height:92}}>
               <Text style={geralStyles.headerInputs}>Descrição da Despesa</Text>
               <TextInput numberOfLines={1} autoComplete="off" autoCorrect={false}

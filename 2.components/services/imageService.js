@@ -6,8 +6,9 @@ import geralStyles from '../styles/geralStyles';
 
 export function useImagePicker() {
 
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
+
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
 
   const pickImageAsync = async (option) => {
         let result;

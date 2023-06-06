@@ -24,7 +24,7 @@ const AdminUtilizadores = (props) => {
             
             
             <FlatList data={filteredUsers} renderItem={({item})=>{
-                  return(<AdminCard  onPress={()=>{props.navigation.navigate("AdminUser", {item})}} name={item.iconName} title={item.username} size={25} backgroundColor="#ADFFB5"></AdminCard>);
+                  return(<AdminCard  onPress={()=>{props.navigation.navigate("AdminStack", {screen:"AdminUser", params:{item}})}} name={item.iconName} title={item.username} size={25} backgroundColor="#ADFFB5"></AdminCard>);
             }} keyExtractor={(item) => item.id.toString()}></FlatList>
 
 

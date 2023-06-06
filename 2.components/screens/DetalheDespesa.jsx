@@ -1,5 +1,5 @@
-import React,{useState} from "react"
-import {View, ScrollView,Image, Text, StyleSheet} from "react-native"
+import React,{useEffect, useState} from "react"
+import {View, ScrollView,Image, Text, StyleSheet, ActivityIndicator} from "react-native"
 import TopNavBar from "../components/TopNavBar";
 import BottomNavBar from "../components/BottomNavBar";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,6 +9,7 @@ import geralStyles from "../styles/geralStyles";
 
 const DetalheDespesa = (props) => {
     
+   
     const itemDespesa = props.route.params.despesa; 
 
     const months = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
@@ -20,35 +21,60 @@ const DetalheDespesa = (props) => {
     const dateString = `${day} de ${month} de ${dataDespesa.getFullYear()}`;
 
     const [metodoPagamento,setMetodoPagamento] = useState (itemDespesa.metodoPagamento);
+   
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        let timer;
     
+        if (isLoading) {
+          timer = setTimeout(() => {
+            setIsLoading(false);
+          }, 500);
+        }
+      });
+    
+
   return (
     <>
         <TopNavBar leftIconName="arrow-back-outline" 
-                   onPressLeft={() => {props.navigation.goBack();}}
+                   onPressLeft={()=>{
+                    if (props.navigation.canGoBack()){
+                        setIsLoading(true);
+                        props.navigation.navigate('Home')
+                        console.log(1);
+                    }else{
+                        setIsLoading(true);
+                        props.navigation.navigate('Home')
+                    }}}
+            
                    title="Detalhes Despesa" rightIconName="trash-outline"></TopNavBar>
-        <ScrollView style={{flex:1, margin:10}}>
-            
-            {  itemDespesa.pago ? 
-            
-            <View style={{marginBottom:10, backgroundColor:"#7eff27", flex:1, flexDirection:"row", justifyContent:"flex-start",alignItems:"center"}}>
-            <View style={{padding:20}}>
-                <Ionicons name="checkbox-outline" size={30}></Ionicons>
+        <ScrollView style={{flex:1, margin:10}} showsVerticalScrollIndicator={false}>
+                {isLoading ? (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" />
+                </View>
+            ) :
+            <>
+                {  itemDespesa.pago ? 
+                
+                <View style={{marginBottom:10, backgroundColor:"#7eff27", flex:1, flexDirection:"row", justifyContent:"flex-start",alignItems:"center"}}>
+                <View style={{padding:20}}>
+                    <Ionicons name="checkbox-outline" size={30}></Ionicons>
+                </View>
+                <Text style={{fontSize:20,fontWeight:"500"}}>Pagamento Definido</Text>
             </View>
-            <Text style={{fontSize:20,fontWeight:"500"}}>Pagamento Definido</Text>
-        </View>
-            :
-            <View style={{marginBottom:10, backgroundColor:"#faf026", flex:1, flexDirection:"row", justifyContent:"flex-start",alignItems:"center"}}>
-            <View style={{padding:20}}>
-                <Ionicons name="warning-outline" size={30}></Ionicons>
-            </View>
-            <Text style={{fontSize:20,fontWeight:"500"}}>Aguarda Pagamento</Text>
-        </View>
-
-        
-            }
+                :
+                <View style={{marginBottom:10, backgroundColor:"#faf026", flex:1, flexDirection:"row", justifyContent:"flex-start",alignItems:"center"}}>
+                <View style={{padding:20}}>
+                    <Ionicons name="warning-outline" size={30}></Ionicons>
+                </View>
+                <Text style={{fontSize:20,fontWeight:"500"}}>Aguarda Pagamento</Text>
+            </View>            
+                }
            
-            <View style={{flex:1,flexDirection:"row", borderColor:"#77c9f3",borderWidth:3,}}>
-                <View style={{flex:1}}>
+            <View style={{flex:1,flexDirection:"row",backgroundColor:"#77c9f3", borderColor:"red", borderWidth:2}}>
+                <View style={{flex:1, borderColor:"red", borderWidth:2}}>
                    <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
                     <Text style={{fontSize:20,fontWeight:"bold",}}> {itemDespesa.emissor}</Text>
                    </View>
@@ -78,8 +104,10 @@ const DetalheDespesa = (props) => {
                 <Text style={geralStyles.headerInputs}>Valor: <Text style={{fontWeight:"normal"}}> {itemDespesa.valor}</Text></Text>
             </View>
             }
-            <MyButtons onPress={() => {props.navigation.navigate('EditarDespesa', {despesa:itemDespesa})}} 
+            <MyButtons onPress={() => {props.navigation.navigate("UserStack", {screen:'EditarDespesa',initial: false, params:{despesa:itemDespesa}})}} 
                        title="Editar" width={350} color="black"></MyButtons>
+                       </>
+    }
         </ScrollView>
     </>
   )

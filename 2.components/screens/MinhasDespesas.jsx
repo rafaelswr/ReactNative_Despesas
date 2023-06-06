@@ -31,7 +31,7 @@ const MinhasDespesas = (props) => {
     <>
       <TopNavBar title="Minhas Despesas"
                  rightIconName="add-outline"
-                 onPressRight={()=>{props.navigation.navigate("NovaDespesa")}}></TopNavBar>
+                 onPressRight={()=>{props.navigation.navigate("UserStack", {screen:"NovaDespesa",initial: false})}}></TopNavBar>
       <View style={{margin:10, flex:1}}> 
           <Text style={{fontSize:17,paddingTop:5}}>Seja bem-vindo <Text style={{fontWeight:"bold"}}>user1!</Text></Text>
           <View style={{flexDirection:"row",alignItems:"center", justifyContent:"space-between", paddingTop:20,paddingBottom:10}}>
@@ -48,14 +48,14 @@ const MinhasDespesas = (props) => {
           </View>
   
         <FlatList data={filteredExpenses} renderItem={({item})=>{
-            return(<CardExpenses onPress={() => {props.navigation.navigate('DetalheDespesa', {despesa:item})}} emissor={item.emissor} logo={`data:image/png;base64,${props.foto}`} data={item.data} pago={item.pago} descricao={item.descricao} valor={item.valor}></CardExpenses>);
+            return(<CardExpenses onPress={() => {props.navigation.navigate("UserStack",{screen:'DetalheDespesa', params:{despesa:item}})}} emissor={item.emissor} logo={`data:image/png;base64,${props.foto}`} data={item.data} pago={item.pago} descricao={item.descricao} valor={item.valor}></CardExpenses>);
         }} keyExtractor={(item) => item.id.toString()}></FlatList>
         
         {
           currentFilter=="Ver Todas" && 
             <> 
-            <Text style={{fontSize:17}}>Total das Despesas do mês</Text>
-            <Text style={{fontSize:20, color:"blue"}} >{soma}€</Text>
+              <Text style={{fontSize:17}}>Total das Despesas do mês</Text>
+              <Text style={{fontSize:20, color:"blue"}} >{soma}€</Text>
             </>
         }
        </View>

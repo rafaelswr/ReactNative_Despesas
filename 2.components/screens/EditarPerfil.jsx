@@ -1,7 +1,7 @@
-import React,{useState} from "react"; 
-import {View, Text, StyleSheet, TextInput,ScrollView, Image, KeyboardAvoidingView} from "react-native"
+import React,{useState, useEffect} from "react"; 
+import {View, Text, StyleSheet, TextInput,ScrollView,ActivityIndicator, Image, KeyboardAvoidingView} from "react-native"
 import TopNavBar from "../components/TopNavBar";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 
 import BottomNavBar from "../components/BottomNavBar";
 import MyButtons from "../components/MyButtons";
@@ -15,28 +15,62 @@ import { useImagePicker } from "../services/imageService";
 const EditarPerfil = (props) => {
     const { selectedImage, modalVisible, removePhoto, openModal, ModalPress } = useImagePicker();
 
-    var user2 = datas.users[2];
+    const {user} = props.route.params; 
 
-    const [name, setName ] = useState("");
-    const [apelido, setApelido ] = useState("");
-    const [username, setUsername ] = useState("");
-    const [morada, setMorada ] = useState("");
-    const [date, setDate ] = useState("");
-    const [codPostal_1,setCodePostal_1] = useState("");
-    const [codPostal_2,setCodePostal_2] = useState("");
+    const [name, setName ] = useState(user.name);
+    const [apelido, setApelido ] = useState(user.apelido);
+    const [username, setUsername ] = useState(user.username);
+    const [morada, setMorada ] = useState(user.morada);
+    const [date, setDate ] = useState(user.date);
+    const [codPostal_1,setCodePostal_1] = useState("1234");
+    const [codPostal_2,setCodePostal_2] = useState("231");
     const [codPostal,setCodPostal] = useState("");
-    const [city,setCity] = useState("");
-    const [currentFilter, setCurrentFilter] = useState("");
+    const [city,setCity] = useState(user.city);
+    const [currentFilter, setCurrentFilter] = useState(user.city);
 
-    const TabNavigation = props.navigation.getParent('Tab');
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        let timer;
+    
+        if (isLoading) {
+          timer = setTimeout(() => {
+            setIsLoading(false);
+          }, 500);
+        }
+      });
+    
+
 
   return (
     <>
       <TopNavBar leftIconName="arrow-back-outline" 
-                 onPressLeft={()=>{props.navigation.goBack()}}
+                 onPressLeft={()=>{
+                    if (props.navigation.canGoBack()){
+                        //props.navigation.goBack();
+                      //  props.navigation.navigate("Perfil");
+                    //console.log("1");
+                       // props.navigation.popToTop();
+                       props.navigation.goBack(); 
+                       console.log("1");
+                    }else{
+                        props.navigation.navigate("Perfil");
+                        console.log("2");
+                    }
+                }}
+    
                  title="Editar Perfil" 
                  rightIconName="checkmark-outline"></TopNavBar>
+      
       <ScrollView keyboardDismissMode="on-drag" showsVerticalScrollIndicator={false} style={{flex:1, margin:10}}>
+      
+        {isLoading ? (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" />
+                </View>
+            ) : 
+            <>
+      
             <View style={{flexDirection:"row",backgroundColor:"#a9c6e2",paddingVertical:20, justifyContent:"center", alignItems:"center"}}>
                 <View style={{paddingRight:10}}>
                     <Image resizeMode="contain"  source={{ uri: selectedImage }} style={{borderRadius:140, width:140,height:140}}></Image>
@@ -129,6 +163,9 @@ const EditarPerfil = (props) => {
             </View>
             <MyButtons title="Cancelar" width={350} color="#838383"
                         onPress={() => {navigation.goBack()}}></MyButtons>
+        
+        </>}
+        
         </ScrollView>
         {
             modalVisible && <ModalPress></ModalPress>

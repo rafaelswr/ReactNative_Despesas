@@ -17,8 +17,8 @@ const AdminEmissores = (props) => {
             <AdminTopNav iconName="refresh-outline" title="Emissores"></AdminTopNav> 
 
             <Pesquisa  onSearch={(search)=>{
-                setFilteredIssuers(issuers.filter(iss=>{
-                    return iss.nome.toLowerCase().includes(search.toLowerCase());
+                setFilteredIssuers(issuers.filter(emissor=>{
+                    return emissor.nome.toLowerCase().includes(search.toLowerCase());
                 }))
             }}></Pesquisa>
             
@@ -34,7 +34,11 @@ const AdminEmissores = (props) => {
             <View style={adminStyles.horizontalLine}/>
 
             <FlatList data={filteredIssuers} renderItem={({item})=>{
-                return( <AdminCard modalReference="o emissor" onPress={()=>{}} name="close-outline" size={34} title={item.nome} backgroundColor="#A9D6FF"></AdminCard>);
+                return( 
+                    <AdminCard modalReference="o emissor" onPress={()=>{}} 
+                            name="close-outline" size={34} title={item.nome} 
+                            backgroundColor="#A9D6FF"/>
+                );
             }} keyExtractor={(item) => item.id.toString()}></FlatList>
 
         </View>

@@ -14,7 +14,7 @@ const AdminTopNav = (props) => {
         </View>
         {props.iconName &&
             <View style={{flex:0.12}}>
-                <TouchableHighlight underlayColor="#efefef" onPress={()=>Alert.alert("Deseja Continuar?")}>
+                <TouchableHighlight underlayColor="#efefef" onPress={props.OnPress}>
                     <Ionicons name={props.iconName} size={37} color="black"></Ionicons>
                 </TouchableHighlight>
             </View>
