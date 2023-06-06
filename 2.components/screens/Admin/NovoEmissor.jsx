@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Image, Text, TextInput } from "react-native";
 import adminStyles from "../../styles/adminStyles";
 import AdminTopNav from "../../components/Admin/AdminTopNav";
@@ -8,31 +8,67 @@ import geralStyles from "../../styles/geralStyles";
 import datas from "../../services/data.json";
 import { useImagePicker } from "../../services/imageService";
 //firestore
-import { adminManagementCreateAsync } from "../../services/firebaseService";
+import { adminManagementCreateAsync, getAllDataCollectionAsync } from "../../services/firebaseService";
+import { Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const NovoEmissor = (props) => {
 
-    const [emissor,setEmissor] = useState("");
+    const [newEmissor,setNewEmissor] = useState("");
     const [tipoPagamento, setTipoPagamento] = useState("");
+    const [metodosPagamento, setMetodosPagamento] = useState([]);
+    const [existeEmissor, setExisteEmissor] = useState(false);
+    const [emissores, setEmissores ]  = useState([]);
 
     const {ModalPress, removePhoto, openModal, selectedImage, modalVisible} = useImagePicker();
 
+    useEffect(()=>{
+
+        getAllDataCollectionAsync((data)=>{
+            setMetodosPagamento(data); 
+        },"metodosPagamento");
+    },[])
+
+    const getEmissores = () => {
+        getAllDataCollectionAsync((data)=>{
+            setEmissores(data);
+        }, "emissores");
+    }
+
+    useEffect(()=>{
+        getEmissores(); 
+    },[])
+
     const onSuccess = _ =>{
         alert("Novo Emissor adicionado");
-        setEmissor("");
+        setNewEmissor("");
         setTipoPagamento("");
     }
 
 
   return (
     <View style={adminStyles.containerMain}>
-        <AdminTopNav title="Novo Emissor"></AdminTopNav>
+        <AdminTopNav title="Novo Emissor"  iconName="refresh-outline" OnPress={()=>getEmissores()} ></AdminTopNav>
         <View style={{ paddingHorizontal:10}}>
             <View style={{height:92}}>
               <Text style={geralStyles.headerInputs}>Nome</Text>
-              <TextInput numberOfLines={1} autoComplete="off" autoCorrect={false}
-                  maxLength={50} value={emissor}  onChangeText={setEmissor} placeholder="Nome Emissor, Sigla" 
-                  style={geralStyles.textInputContainer}></TextInput> 
+              <View style={{flexDirection:"row"}}>
+                    <TextInput  numberOfLines={1} autoComplete="off" autoCorrect={false}
+                        maxLength={50} value={newEmissor}  onChangeText={setNewEmissor} placeholder="Nome Emissor, Sigla" 
+                        style={[geralStyles.textInputContainer, existeEmissor && geralStyles.invalidInput, {flex:0.9}]}/>
+                    <View style={{justifyContent:"center", alignItems:"center", flex:0.2}}>
+                        <TouchableOpacity onPress={()=>{
+                            setNewEmissor("");
+                            setExisteEmissor("");
+                        }}>
+                            <Ionicons name="close-outline" style={{alignSelf:"center"}} size={30}></Ionicons>
+                            <Text style={{color:"#969595"}}>Limpar</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                {
+                    existeEmissor && <Text style={{color:"red",fontWeight:"bold", fontSize:12}}>Emissor com o mesmo nome já existe!</Text>
+                }
             </View>
 
             <View style={{flexDirection:"row", paddingVertical:10}}>
@@ -42,8 +78,8 @@ const NovoEmissor = (props) => {
                     </View>
                 </View>
                 <View style={{flex:0.45,alignSelf:"center"}}>
-                    <MyButtons onPress={()=>{openModal()}} title="Upload Foto" color="#1a6dc0"></MyButtons>
-                    <MyButtons onPress={()=>{removePhoto()}} title="Remove Foto" color="red"></MyButtons>
+                    <MyButtons onPress={()=>{openModal()}} title="Upload Logo" color="#1a6dc0"></MyButtons>
+                    <MyButtons onPress={()=>{removePhoto()}} title="Remove Logo" color="red"></MyButtons>
                 </View>
             </View>
 
@@ -53,10 +89,12 @@ const NovoEmissor = (props) => {
                   <Picker style={{ width:340}} mode="dropdown" 
                   selectedValue={tipoPagamento} onValueChange={(value)=>setTipoPagamento(value)}>
                         <Picker.Item label="-" value="-"></Picker.Item>
-                        {datas.metodosPagamento.map((metodo, index) => (
-                            <Picker.Item key={index} label={metodo} value={metodo} />
+
+                        {metodosPagamento.map((item) => (
+                            <Picker.Item key={item.id} label={item.nome} value={item.nome} />
                             
                         ))}
+
                   </Picker>
               </View> 
             </View>
@@ -66,21 +104,32 @@ const NovoEmissor = (props) => {
             
             <MyButtons onPress={()=>{
 
-                if(emissor == "" || tipoPagamento =="-"){
-                    alert("Deixou campos em vazio!");
-                }else{
-                    const newEmissor = {
-                        nome:emissor, 
-                        pagamentoPredefinido:tipoPagamento,
-                    }
+                const exists = emissores.some((item)=>{
+                    return item.nome.toLowerCase() === newEmissor.toLowerCase(); 
+                })
 
-                   adminManagementCreateAsync(newEmissor,"emissores",onSuccess);
-            
+                if(newEmissor != "" && (tipoPagamento !="" || tipoPagamento === "-")){  
+                    if(!exists){
+                        const obj = {
+                            nome:newEmissor, 
+                            pagamentoPredefinido:tipoPagamento,
+                        }
+    
+                       adminManagementCreateAsync(obj,"emissores",onSuccess);    
+                    }else{    
+                        setExisteEmissor(true);
+                        console.log("Emissor já existe");
+                    }
+                }else{
+                    alert("Deixou campos vazios!");
                 }
-               
             }}  title="Adicionar" width={350} color="#1a6dc0"/>
 
-            <MyButtons onPress={()=>{}}  title="Cancelar " width={350} color="#989696"/>
+            <MyButtons onPress={()=>{
+                    setExisteEmissor(false);
+                    setTipoPagamento("-");
+                    props.navigation.navigate("Emissores");
+                }}  title="Voltar" width={350} color="#989696"/>
         </View>
         {
             modalVisible && <ModalPress></ModalPress>

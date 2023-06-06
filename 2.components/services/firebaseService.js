@@ -1,5 +1,5 @@
 import { db } from "./firebaseConfig";
-import { addDoc, collection, getDocs, doc } from "firebase/firestore";
+import { addDoc, collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 
 const createExpenseAsync = async (newExpense)=> {
     try{
@@ -18,24 +18,35 @@ const adminManagementCreateAsync = async (obj, nameCollection, onSuccess)=>{
     }
 } 
 
-const getMetodosPagamentoAsync = async onDataRetrieved => {
-    let metodosPagamento = [];
+const getAllDataCollectionAsync = async (onDataRetrieved, nameCollection) => {
+    let arrayData = [];
     try{
-        const querySnapshot = await getDocs(collection(db, "metodosPagamento"));
+        const querySnapshot = await getDocs(collection(db, nameCollection));
         querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            metodosPagamento.push({...doc.data(), id:doc.id})
+            arrayData.push({...doc.data(), id:doc.id})
         });
-        onDataRetrieved(metodosPagamento);
+        onDataRetrieved(arrayData);
     }catch(error){
         console.error(error);
     }
 
 }
 
+const adminDeleteDocAsync = async (onDelete, id, nameCollection)=>{
+    try{
+        
+        await deleteDoc(doc(db, nameCollection, id));
+        onDelete();
+    
+    }catch(error){
+        console.log(error);
+    } 
+}
+
 
 export {
     createExpenseAsync,
     adminManagementCreateAsync, 
-    getMetodosPagamentoAsync, 
+    getAllDataCollectionAsync,
+    adminDeleteDocAsync, 
 }

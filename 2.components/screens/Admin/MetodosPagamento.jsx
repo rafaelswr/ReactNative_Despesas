@@ -7,8 +7,7 @@ import adminStyles from "../../styles/adminStyles.jsx";
 import geralStyles from '../../styles/geralStyles';
 import AdminTopNav from '../../components/Admin/AdminTopNav';
 //firestore
-import { adminManagementCreateAsync } from "../../services/firebaseService";
-import { getMetodosPagamentoAsync } from "../../services/firebaseService";
+import { adminManagementCreateAsync, getAllDataCollectionAsync } from "../../services/firebaseService";
 
 const MetodosPagamento = (props) => { 
 
@@ -17,21 +16,16 @@ const MetodosPagamento = (props) => {
     const [newPagamento, setNewPagamento] = useState("");
     const [existsPagamento, setExistsPagamento] = useState(false);
     
+    const getMetodos = ()=>{
+        getAllDataCollectionAsync((value)=>{
+            setMetodosPagamento(value);
+            setFilteredMethods(value);
+        }, "metodosPagamento");
+    }
 
     useEffect(()=>{
         getMetodos();
     },[]); 
-
-    const getMetodos = ()=>{
-        getMetodosPagamentoAsync((value)=>{
-            setMetodosPagamento(value);
-            setFilteredMethods(value);
-        });
-    }
-
-    const existsAsync =  () => {
-        
-    }
 
    const onSuccess = ()=>{
         alert(`Método de Pagamento adicionado!`);
