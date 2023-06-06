@@ -7,7 +7,9 @@ import adminStyles from "../../styles/adminStyles.jsx";
 import geralStyles from '../../styles/geralStyles';
 import AdminTopNav from '../../components/Admin/AdminTopNav';
 //firestore
-import { adminManagementCreateAsync, getAllDataCollectionAsync } from "../../services/firebaseService";
+import { adminManagementCreateAsync, 
+        getAllDataCollectionAsync, 
+        adminDeleteDocAsync} from "../../services/firebaseService";
 
 const MetodosPagamento = (props) => { 
 
@@ -68,7 +70,7 @@ const MetodosPagamento = (props) => {
       <View style={{flex:1}}>
           <MyButtons onPress={ () => { 
 
-                const exists  = metodosPagamento.some(method=>{
+                const exists  = filteredMethods.some(method=>{
                     return method.nome.toLowerCase() === newPagamento.toLowerCase();
                 });
 
@@ -98,7 +100,17 @@ const MetodosPagamento = (props) => {
 
   
           <FlatList data={filteredMethods} renderItem={({item})=>{
-              return( <AdminCard modalReference="o Metodo de Pagamento" onPress={()=>{}} name="close-outline" size={34} title={item.nome} backgroundColor="#ACFDEE"></AdminCard>);
+              return(
+                 <AdminCard modalReference="o Metodo de Pagamento" 
+                 onPress={()=>{}} name="close-outline" size={34} 
+                 title={item.nome} backgroundColor="#ACFDEE"
+                 onPropsDelete={()=>{
+                    adminDeleteDocAsync(()=>{
+                       setFilteredMethods(filteredMethods.filter((p)=>p.id != item.id));
+                       alert(`Método ${item.nome} eliminado`);
+                    },item.id,"metodosPagamento");
+                }}  
+                 ></AdminCard>);
           }} keyExtractor={(item) => item.id}></FlatList>
 
       
