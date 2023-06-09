@@ -28,6 +28,7 @@ import NovaDespesa from "./screens/NovaDespesa";
 import NovoEmissor from "./screens/Admin/NovoEmissor";
 import AdminUtilizadores from "./screens/Admin/AdminUtilizadores";
 import DrawerScreens from "./navigation/DrawerScreens";
+import EditarEmissor from "./screens/Admin/EditarEmissor";
 
 /*
 const AppNavigation = ({ isAdmin, isAuthenticated}) => {
@@ -78,6 +79,7 @@ const Tab = createBottomTabNavigator();
 const AdminStack = () => (
   <Stack.Navigator screenOptions={{ cardStyle: {backgroundColor: "#fff"}, headerShown:false}}>
     <Stack.Screen name="NovoEmissor" component={NovoEmissor}/>
+    <Stack.Screen name="EditarEmissor" component={EditarEmissor}/>
   </Stack.Navigator>
 );
 
@@ -119,9 +121,9 @@ const AppNavigation = ({ isAdmin, isAuthenticated}) => {
             
               }}>
             <Drawer.Screen name="AdminStack" component={AdminStack} options={{drawerItemStyle: { height: 0 }}}/>
-            <Drawer.Screen name="Emissores" component={AdminEmissores} />
-            <Drawer.Screen name="Cidades" component={AdminCidades}/>
-            <Drawer.Screen name="AdminPage" component={AdminPage} options={{title:"Página Administrador"}}/>
+           <Drawer.Screen name="Cidades" component={AdminCidades}/>
+                      <Drawer.Screen name="Emissores" component={AdminEmissores} />
+           <Drawer.Screen name="AdminPage" component={AdminPage} options={{title:"Página Administrador"}}/>
             <Drawer.Screen name="MetodosPagamento" component={MetodosPagamento} options={{title:"Métodos Pagamento"}} />
             <Drawer.Screen name="Utilizadores" component={AdminUtilizadores} />
             <Drawer.Screen name="Sair" component={AdminUtilizadores}/>

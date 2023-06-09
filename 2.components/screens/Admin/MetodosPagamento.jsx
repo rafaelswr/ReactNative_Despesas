@@ -33,6 +33,7 @@ const MetodosPagamento = (props) => {
         alert(`Método de Pagamento adicionado!`);
         setNewPagamento("");
         setExistsPagamento(false);
+        getMetodos();
         console.log("Método adicionado");
     } 
 

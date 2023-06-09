@@ -43,10 +43,16 @@ const AdminCard = (props) => {
 
  
   return (
-    <TouchableOpacity onPress={props.onPress}>
-    <View style={{flex:1, height:70, flexDirection:"row", marginVertical:5,opacity:locked=="lock-closed-outline" ? 0.5 : 1.0}}>
-        <View style={{backgroundColor:props.backgroundColor ? props.backgroundColor: "white",flex:0.85, borderRightColor:"black", borderRightWidth:2,justifyContent:"center",alignItems:"flex-start",paddingHorizontal:10}}>
-            <Text style={{fontSize:20,fontWeight:500}}>{props.title}</Text>
+    <>
+      <View style={{flex:1, height:70, flexDirection:"row", marginVertical:5,opacity:locked=="lock-closed-outline" ? 0.5 : 1.0}}>
+        <View style={{flex:0.85}}>
+            <TouchableOpacity onPress={props.onPress} style={{backgroundColor:props.backgroundColor ? props.backgroundColor: "white",
+            borderRightColor:"black", borderRightWidth:2,justifyContent:"center",
+                alignItems:"flex-start", paddingVertical:22, paddingHorizontal:10}}>
+        
+                <Text style={{fontSize:20,fontWeight:500}}>{props.title}</Text>
+                
+            </TouchableOpacity>
         </View>
         <View style={{backgroundColor:props.name=="close-outline" ? "red": "#efefef",flex:0.15,justifyContent:"center",alignItems:"center"}}>
             <Pressable onPress={()=>{
@@ -59,10 +65,10 @@ const AdminCard = (props) => {
             </Pressable>
         </View>
             {
-                modalVisible && <ModalPress></ModalPress>
+              modalVisible && <ModalPress></ModalPress>
             }
-    </View>
-    </TouchableOpacity>
+     </View>
+    </>
   )
 };
 

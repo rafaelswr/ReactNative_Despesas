@@ -23,9 +23,7 @@ const AdminEmissores = (props) => {
     useEffect(()=>{
        getEmissores(); 
     },[])
-    
 
-    
     return (
         <View style={adminStyles.containerMain}>
             <AdminTopNav iconName="refresh-outline" title="Emissores" OnPress={()=>getEmissores()}></AdminTopNav> 
@@ -51,7 +49,11 @@ const AdminEmissores = (props) => {
 
             <FlatList data={filteredEmissores} renderItem={({item})=>{
                return( 
-                    <AdminCard modalReference="o emissor" onPress={()=>{}}
+                    <AdminCard modalReference="o emissor" onPress={()=>{
+                        props.navigation.navigate("AdminStack", {screen:"EditarEmissor", params:{emissorID:item.id}})
+                    }
+                      
+                    }
                             onPropsDelete={()=>{
                                 adminDeleteDocAsync(()=>{
                                    setFilteredEmissores(filteredEmissores.filter((p)=>p.id != item.id));

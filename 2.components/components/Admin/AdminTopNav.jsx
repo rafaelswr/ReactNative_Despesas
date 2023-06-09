@@ -6,6 +6,13 @@ import adminStyles from "../../styles/adminStyles.jsx";
 const AdminTopNav = (props) => {
   return (
     <View style={adminStyles.containerNav}>
+        {props.backIconName &&
+            <View style={{flex:0.12}}>
+                <TouchableHighlight underlayColor="#efefef" onPress={props.OnBackPress}>
+                    <Ionicons name={props.backIconName} size={37} color="black"></Ionicons>
+                </TouchableHighlight>
+            </View>
+        }
         <View style={{flex:1, flexDirection:props.userAdmin && "row"}}>
             <Text style={adminStyles.titleNav}>{props.title}</Text>
             {

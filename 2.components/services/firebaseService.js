@@ -1,5 +1,5 @@
 import { db } from "./firebaseConfig";
-import { addDoc, collection, getDocs, doc, deleteDoc } from "firebase/firestore";
+import { addDoc, collection, getDocs, doc, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
 
 const createExpenseAsync = async (newExpense)=> {
     try{
@@ -29,18 +29,33 @@ const getAllDataCollectionAsync = async (onDataRetrieved, nameCollection) => {
     }catch(error){
         console.error(error);
     }
-
 }
 
 const adminDeleteDocAsync = async (onDelete, id, nameCollection)=>{
     try{
-        
         await deleteDoc(doc(db, nameCollection, id));
         onDelete();
-    
     }catch(error){
         console.log(error);
     } 
+}
+
+const getDocumentOfCollection = async (onDataRetrieved, id, nameCollection)=>{
+    let docObj = {};
+    const docSnap = await getDoc(doc(db, nameCollection, id));
+
+    if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        docObj = {...docSnap.data(),id};
+    } else {
+        console.log("No such document!");
+    }
+    onDataRetrieved(docObj);
+}
+
+const updateDocument = async (onDataRetrieved, id, nameCollection,obj)=>{
+    await updateDoc(doc(db, nameCollection, id),obj);
+    onDataRetrieved();
 }
 
 
@@ -49,4 +64,6 @@ export {
     adminManagementCreateAsync, 
     getAllDataCollectionAsync,
     adminDeleteDocAsync, 
+    getDocumentOfCollection,
+    updateDocument,
 }

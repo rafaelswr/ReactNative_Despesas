@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Image, Text, TextInput } from "react-native";
+import { View, Image, Text, TextInput,TouchableOpacity} from "react-native";
 import adminStyles from "../../styles/adminStyles";
 import AdminTopNav from "../../components/Admin/AdminTopNav";
 import MyButtons from "../../components/MyButtons";
@@ -10,7 +10,6 @@ import { useImagePicker } from "../../services/imageService";
 //firestore
 import { adminManagementCreateAsync, getAllDataCollectionAsync } from "../../services/firebaseService";
 import { Ionicons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const NovoEmissor = (props) => {
 
@@ -23,7 +22,6 @@ const NovoEmissor = (props) => {
     const {ModalPress, removePhoto, openModal, selectedImage, modalVisible} = useImagePicker();
 
     useEffect(()=>{
-
         getAllDataCollectionAsync((data)=>{
             setMetodosPagamento(data); 
         },"metodosPagamento");
@@ -43,6 +41,7 @@ const NovoEmissor = (props) => {
         alert("Novo Emissor adicionado");
         setNewEmissor("");
         setTipoPagamento("");
+        getEmissores(); 
     }
 
 
@@ -108,14 +107,15 @@ const NovoEmissor = (props) => {
                     return item.nome.toLowerCase() === newEmissor.toLowerCase(); 
                 })
 
-                if(newEmissor != "" && (tipoPagamento !="" || tipoPagamento === "-")){  
+                if(newEmissor != "" && (tipoPagamento != "" || tipoPagamento === "-")){  
                     if(!exists){
                         const obj = {
                             nome:newEmissor, 
                             pagamentoPredefinido:tipoPagamento,
                         }
-    
+
                        adminManagementCreateAsync(obj,"emissores",onSuccess);    
+                    
                     }else{    
                         setExisteEmissor(true);
                         console.log("Emissor já existe");
