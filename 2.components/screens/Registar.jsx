@@ -53,7 +53,7 @@ const Registar = (props) => {
     setShowAlert(true);
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 500, // Duração da animação de fade em milissegundos
+      duration: 500, 
       useNativeDriver: true,
     }).start(() => {
       setTimeout(() => {
@@ -65,14 +65,8 @@ const Registar = (props) => {
           setShowAlert(false);
           props.navigation.navigate("Login");
         });
-      }, 2000); // Tempo de exibição do alerta em milissegundos
+      }, 2000);
     });
-  };
-
-
-
-  const handleCloseAlert = () => {
-    setShowAlert(false);
   };
 
   useEffect(() => {
@@ -102,10 +96,10 @@ const Registar = (props) => {
 
   const handlePassword = ()=>{
     if(password.trim()===""){
-      setErrorPassword("Insira a password da sua conta!");
+      setErrorPassword("Por favor, insira a password da sua conta!");
       setValidPassword(false);
     }else if(!passwordRegExp.test(password)){
-      setErrorPassword("Password nao cumpriu os requistos mínimos");
+      setErrorPassword("Password não cumpriu os requistos mínimos!");
       setValidPassword(false);
     }else{
       setErrorPassword("");
@@ -136,10 +130,10 @@ const Registar = (props) => {
   const handleEmail = ()=>{
     //se email ja existe associado a algum utilizador
     if(email.trim()==""){
-      setErrorEmail("Introduza o seu email!");
+      setErrorEmail("Por favor, introduza o seu email!");
       setValidEmail(false);
     }else if(!emailRegExp.test(email)){
-      setErrorEmail("Insira um email válido!"); 
+      setErrorEmail("Por favor, insira um email válido!"); 
       setValidEmail(false);
     }else{
       setErrorEmail("");
@@ -154,7 +148,7 @@ const Registar = (props) => {
     //const UserNameinUse= await firebase.firestore().collection('users').where('username', '==', username).get();
    // if(UserNameinUse.empty){
     if(username.trim()===""){
-      setErrorUsername("Introduza o nome de utilizador!");
+      setErrorUsername("Por favor, introduza o nome de utilizador!");
       setValidUsername(false);
     }else{
       setErrorUsername("");
@@ -194,10 +188,7 @@ const Registar = (props) => {
   }
 
   return (
-
-    
     <> 
-    
       <TopNavBar2 leftIconName="arrow-back-outline" title="Registo"
                   onPressLeft={() => {props.navigation.goBack()}}></TopNavBar2>
       
@@ -211,7 +202,7 @@ const Registar = (props) => {
             top: 100,
             left: 0,
             right: 0,
-            zIndex: 9999,
+            zIndex: 10,
           }}
         >
           <Text style={{ color: 'white', fontSize: 17 }}>Registo Efetuado com sucesso!</Text>
@@ -332,7 +323,7 @@ const Registar = (props) => {
                     }
                 </View>
                 <View style={{ flex:0.5,paddingHorizontal:5 ,justifyContent:"center", alignItems:"center"}}>
-                    <Text style={{fontSize:13, fontWeight:"bold"}}><Text>NOTA</Text>: Password dever ser composta por, pelo menos, 6 letras das quias 1 maiúscula, 1 minúscula e caracteres especiais.</Text>
+                    <Text style={{fontSize:13, fontWeight:"bold"}}><Text style={{color:"red"}}>NOTA:</Text> Password dever ser composta por, pelo menos 6 caracteres dos quais 1 maiúscula, 1 minúscula e caracteres especiais.</Text>
                 </View>
 
             </View>
