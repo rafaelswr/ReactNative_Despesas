@@ -5,8 +5,6 @@ import MyButtons from '../components/MyButtons';
 import geralStyles from '../styles/geralStyles';
 
 export function useImagePicker() {
-
-
     const [selectedImage, setSelectedImage] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
 

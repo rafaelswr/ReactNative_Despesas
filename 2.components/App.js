@@ -185,8 +185,8 @@ const AppNavigation = ({ isAdmin, isAuthenticated}) => {
 };
 
 const App = () => {
-  const isAdmin = true;  
-  const isAuthenticated = true; 
+  const isAdmin = false;  
+  const isAuthenticated = false; 
 
   return <AppNavigation isAdmin={isAdmin} isAuthenticated={isAuthenticated} />;
 };

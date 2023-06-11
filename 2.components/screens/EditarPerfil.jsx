@@ -162,7 +162,7 @@ const EditarPerfil = (props) => {
                 </View>
             </View>
             <MyButtons title="Cancelar" width={350} color="#838383"
-                        onPress={() => {navigation.goBack()}}></MyButtons>
+                        onPress={() => {props.navigation.goBack()}}></MyButtons>
         
         </>}
         
