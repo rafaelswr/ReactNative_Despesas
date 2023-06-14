@@ -7,7 +7,7 @@ const MyButtons = (props) => {
         backgroundColor:props.isDisabled ? "grey":props.color,
         padding:15,
         borderRadius:props.radius ? props.radius : 8 ,
-        width:props.width,
+        width:props.width ? props.width : null,
         margin:10,
     };
 

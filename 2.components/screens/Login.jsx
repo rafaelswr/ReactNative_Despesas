@@ -1,14 +1,25 @@
-import {useState} from "react";
+import {useState, useReducer} from "react";
 import * as React from 'react';
 import {View, Text,TextInput,ScrollView, StyleSheet,Image, Pressable} from "react-native";
 import MyButtons from "../components/MyButtons";
 import geralStyles from "../styles/geralStyles";
+import { loginReducer } from "../services/loginService";
 
-const Login = ({props, navigation}) => {
+const Login = ({ navigation }) => {
 
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [validEmail, setValidEmail] = useState(true);
+
+    const [state, dispatch]= useReducer(loginReducer, {focusEmail:false, focusPassword:false});
+
+    const onFocusPassword = _ => dispatch({ type: 'focusPassword' });
+    const onFocusEmail  = _ => dispatch({type:"focusEmail"});
+    const onBlurPassword = _ => dispatch({ type: 'blurPassword' });
+    const onBlurEmail  = _ => dispatch({type:"blurEmail"});
+
+
+
 
     const onSubmitHandler = () => {
               
@@ -25,9 +36,9 @@ const Login = ({props, navigation}) => {
 
 
     return(
-        <ScrollView style={{flex:1, margin:10}}> 
+        <ScrollView style={{flex:1, margin:10}} showsHorizontalScrollIndicator={false}> 
             <View style={[styles.imageContainer]}>
-                <Image style={{width:250, height:250}} source={require("../assets/logoApp.jpg")}/>
+                <Image style={{width:150, height:150}} source={require("../assets/logoApp.jpg")}/>
             </View>
             <View>
                 <Text style={{fontSize:25,textAlign:"center", fontWeight:500}}>Olá, seja muito bemvindo!</Text>
@@ -36,22 +47,21 @@ const Login = ({props, navigation}) => {
                 <View style={{height:95}}>
                     <Text style={{fontSize:18,fontWeight:500}}>Email</Text>
                     <TextInput numberOfLines={1} autoComplete="off" autoCorrect={false}
-                    maxLength={50} value={email} keyboardType="email-address"  onChangeText={setEmail} placeholder="Insira o seu email" 
-                        style={[styles.textInputContainer ,!validEmail && geralStyles.invalidInput]}/>
+                    maxLength={50} value={email} keyboardType="email-address" onBlur={onBlurEmail} onFocus={onFocusEmail} 
+                    onChangeText={value=>{setValidEmail(true); setEmail(value);}} placeholder="Insira o seu email" 
+                        style={[styles.textInputContainer ,!validEmail && geralStyles.invalidInput, state.focusEmail && geralStyles.inputFocused]}/>
                     {validEmail==false && <Text style={{color: 'red',fontWeight:"bold"}}>Por favor, insira um email válido</Text>}
                 </View>
                 <View style={{height:95}}>
                     <Text style={{fontSize:18, fontWeight:500}}>Password</Text>
                     <TextInput secureTextEntry numberOfLines={1} autoComplete="off" autoCorrect={false}
-                    maxLength={50} value={password}  onChangeText={setPassword} placeholder="Insira a sua password" 
-                        style={styles.textInputContainer}></TextInput>
+                    maxLength={50} value={password} onFocus={onFocusPassword} onBlur={onBlurPassword} onChangeText={setPassword} placeholder="Insira a sua password" 
+                        style={[styles.textInputContainer, state.focusPassword && geralStyles.inputFocused]}></TextInput>
                 </View>
             </View>
             <View style={{marginBottom:10}}>
-                <MyButtons //onPress={()=>onSubmitHandler()}  
-                           onPress={() => {
-                            navigation.navigate('DrawerScreens')}}
-                           title="Entrar" width={350} color="#1a6dc0"></MyButtons>
+                <MyButtons onPress={()=>onSubmitHandler()}  
+                           title="Entrar" width={320} color="#1a6dc0"></MyButtons>
             </View>
             
             <Pressable onPress={() => {navigation.navigate('NewPassword')}}>
@@ -98,7 +108,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 2,
         elevation: 2,
-        backgroundColor:"#e0dfdf",
+        backgroundColor:"white",
         fontSize:17,
     }
 }); 
