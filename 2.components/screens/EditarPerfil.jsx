@@ -45,19 +45,7 @@ const EditarPerfil = (props) => {
   return (
     <>
       <TopNavBar leftIconName="arrow-back-outline" 
-                 onPressLeft={()=>{
-                    if (props.navigation.canGoBack()){
-                        //props.navigation.goBack();
-                      //  props.navigation.navigate("Perfil");
-                    //console.log("1");
-                       // props.navigation.popToTop();
-                       props.navigation.goBack(); 
-                       console.log("1");
-                    }else{
-                        props.navigation.navigate("Perfil");
-                        console.log("2");
-                    }
-                }}
+                 onPressLeft={()=>{props.navigation.navigate("Perfil");}}
     
                  title="Editar Perfil" 
                  rightIconName="checkmark-outline"></TopNavBar>

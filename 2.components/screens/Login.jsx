@@ -18,9 +18,6 @@ const Login = ({ navigation }) => {
     const onBlurPassword = _ => dispatch({ type: 'blurPassword' });
     const onBlurEmail  = _ => dispatch({type:"blurEmail"});
 
-
-
-
     const onSubmitHandler = () => {
               
         const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -33,10 +30,8 @@ const Login = ({ navigation }) => {
         }
     }   
         
-
-
     return(
-        <ScrollView style={{flex:1, margin:10}} showsHorizontalScrollIndicator={false}> 
+        <ScrollView style={{flex:1, margin:10}} showsVerticalScrollIndicator={false}> 
             <View style={[styles.imageContainer]}>
                 <Image style={{width:150, height:150}} source={require("../assets/logoApp.jpg")}/>
             </View>
@@ -49,23 +44,23 @@ const Login = ({ navigation }) => {
                     <TextInput numberOfLines={1} autoComplete="off" autoCorrect={false}
                     maxLength={50} value={email} keyboardType="email-address" onBlur={onBlurEmail} onFocus={onFocusEmail} 
                     onChangeText={value=>{setValidEmail(true); setEmail(value);}} placeholder="Insira o seu email" 
-                        style={[styles.textInputContainer ,!validEmail && geralStyles.invalidInput, state.focusEmail && geralStyles.inputFocused]}/>
+                        style={[styles.textInputContainer ,!validEmail && geralStyles.invalidInput, state.focusEmail && styles.inputFocused]}/>
                     {validEmail==false && <Text style={{color: 'red',fontWeight:"bold"}}>Por favor, insira um email válido</Text>}
                 </View>
                 <View style={{height:95}}>
                     <Text style={{fontSize:18, fontWeight:500}}>Password</Text>
                     <TextInput secureTextEntry numberOfLines={1} autoComplete="off" autoCorrect={false}
                     maxLength={50} value={password} onFocus={onFocusPassword} onBlur={onBlurPassword} onChangeText={setPassword} placeholder="Insira a sua password" 
-                        style={[styles.textInputContainer, state.focusPassword && geralStyles.inputFocused]}></TextInput>
+                        style={[styles.textInputContainer, state.focusPassword && styles.inputFocused]}></TextInput>
                 </View>
             </View>
             <View style={{marginBottom:10}}>
                 <MyButtons onPress={()=>onSubmitHandler()}  
-                           title="Entrar" width={320} color="#1a6dc0"></MyButtons>
+                    title="Entrar" width={320} color="#1a6dc0"></MyButtons>
             </View>
             
             <Pressable onPress={() => {navigation.navigate('NewPassword')}}>
-                       <Text style={{color:"#1a6dc0", textAlign:"center", paddingVertical:10}}>Esqueci-me da Password</Text>
+                <Text style={{color:"#1a6dc0", textAlign:"center", paddingVertical:10}}>Esqueci-me da Password</Text>
             </Pressable>
 
             <View style={{flexDirection: 'row', justifyContent:'center', alignItens:'center', paddingVertical:10}}>
@@ -110,6 +105,10 @@ const styles = StyleSheet.create({
         elevation: 2,
         backgroundColor:"white",
         fontSize:17,
+    }, 
+    inputFocused:{
+        borderWidth:2,
+        borderColor:"#7bbcf9",
     }
 }); 
 

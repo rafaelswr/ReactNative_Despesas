@@ -2,7 +2,7 @@ import React from "react"
 import {View, Text,Image,ScrollView, StyleSheet} from "react-native"
 import MyButtons from "../components/MyButtons";
 
-const FirstPage = ({props, navigation}) => {
+const FirstPage = ({navigation}) => {
     return(
         <ScrollView showsVerticalScrollIndicator={false}> 
             <View style={styles.imageContainer}> 

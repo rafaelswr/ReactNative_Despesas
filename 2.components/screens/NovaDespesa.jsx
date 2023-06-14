@@ -5,7 +5,7 @@ import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import datas from "../services/data.json";
-
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { useImagePicker } from "../services/imageService";
 
 const NovaDespesa = (props) => {
@@ -21,14 +21,24 @@ const NovaDespesa = (props) => {
     const [entidade, setEntidade] = useState("");
     const [referencia, setReferencia] = useState("");
     
+     //data
+    const [date, setDate] = useState(null);
+    const [dateString, setDateString] = useState("");
+    const [showPicker, setShowPicker] = useState(false);
+
+
+    const handleDate = (event,date) => {
+        setShowPicker(false);
+        if (date) {
+          const dateString = date.toISOString().split("T")[0];
+          setDateString(dateString);
+        }
+      };
+    
   return (
     <>
       <TopNavBar leftIconName="arrow-back-outline" 
-                onPressLeft={()=>{
-                    if (props.navigation.canGoBack())
-                    props.navigation.navigate('Home')
-                    else
-                        props.navigation.navigate('Home')}}
+                onPressLeft={_=>props.navigation.navigate('Home')}
                  title="Adicionar Despesa" rightIconName="checkmark-outline"></TopNavBar>
       <ScrollView style={{flex:1, margin:15}}>
             
@@ -52,15 +62,38 @@ const NovaDespesa = (props) => {
                   style={styles.textInputContainer}></TextInput> 
             </View>
 
-            <View style={{height:92}}>
-                <Text style={{fontSize:17, fontWeight:500}}>Data de Pagamento</Text>
-                <View style={{flexDirection:"row", alignItems:"center"}}>
-                    <View style={{flex:0.8}}>
-                        <TextInput  value={data} onChangeText={setData} dataDetectorTypes="calendarEvent" style={styles.textInputContainer}></TextInput>
-                    </View>
-                    <Ionicons style={{ paddingLeft:5}} size={30} name="calendar-outline"></Ionicons>
-                </View>
+            <View style={{paddingLeft:5, flex:1}}>
+                  <View  style={{flexDirection:"row", justifyContent:"flex-start",alignItems:"center"}}>
+                    <Text style={{fontSize:17, fontWeight:500}}>Data de Nascimento</Text>
+                    <TouchableOpacity onPress={_=>setShowPicker(true)} style={{marginHorizontal:10}} >
+                      <Ionicons style={{ paddingLeft:5}} size={40} name="calendar"></Ionicons>
+                    </TouchableOpacity>
+                  </View>
+                
+                    {showPicker && (
+                      <>
+                          <DateTimePicker
+                            mode="date"
+                            value={date || new Date()}
+                            onChange={handleDate}
+                            maximumDate={new Date()}
+                          />
+                      </>
+                    )}     
+
+                    {
+                      dateString!="" &&
+                      (
+                        <View style={[styles.textInputContainer,{width:100,paddingRight:10,marginBottom:15,justifyContent:"center",alignItems:"center"}]}>
+                          <Text style={{alignSelf:"center"}}>{dateString}</Text>                          
+                        </View>
+                      )
+
+                    }
+                 
             </View>
+
+
             <View style={{flexDirection:"row", marginVertical:5}}>
 
                 <View style={{flexDirection:"column", flex:0.5}}>

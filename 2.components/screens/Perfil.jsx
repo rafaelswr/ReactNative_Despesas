@@ -1,7 +1,6 @@
 import React from "react"
-import {View, Text, StyleSheet, Image, ScrollView,} from "react-native"
+import {View, Text, Image, ScrollView,} from "react-native"
 import TopNavBar from "../components/TopNavBar";
-import BottomNavBar from "../components/BottomNavBar";
 import MyButtons from "../components/MyButtons";
 import datas from "../services/data.json";
 
