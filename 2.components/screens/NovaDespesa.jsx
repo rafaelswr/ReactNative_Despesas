@@ -28,6 +28,7 @@ const NovaDespesa = (props) => {
 
 
     const handleDate = (event,date) => {
+        setDate(date);
         setShowPicker(false);
         if (date) {
           const dateString = date.toISOString().split("T")[0];
@@ -64,7 +65,7 @@ const NovaDespesa = (props) => {
 
             <View style={{paddingLeft:5, flex:1}}>
                   <View  style={{flexDirection:"row", justifyContent:"flex-start",alignItems:"center"}}>
-                    <Text style={{fontSize:17, fontWeight:500}}>Data de Nascimento</Text>
+                    <Text style={{fontSize:17, fontWeight:500}}>Data de Pagamento</Text>
                     <TouchableOpacity onPress={_=>setShowPicker(true)} style={{marginHorizontal:10}} >
                       <Ionicons style={{ paddingLeft:5}} size={40} name="calendar"></Ionicons>
                     </TouchableOpacity>
@@ -82,13 +83,11 @@ const NovaDespesa = (props) => {
                     )}     
 
                     {
-                      dateString!="" &&
-                      (
-                        <View style={[styles.textInputContainer,{width:100,paddingRight:10,marginBottom:15,justifyContent:"center",alignItems:"center"}]}>
-                          <Text style={{alignSelf:"center"}}>{dateString}</Text>                          
-                        </View>
-                      )
-
+                      dateString != "" && (
+                            <View style={[styles.textInputContainer,{width:100,paddingRight:10,marginBottom:15,justifyContent:"center",alignItems:"center"}]}>
+                                <Text style={{alignSelf:"center"}}>{dateString}</Text>                          
+                            </View>
+                        )
                     }
                  
             </View>
